@@ -1,0 +1,259 @@
+TEACHER REVIEW EXTRACT - coding-vocab-lesson
+
+What this includes:
+- Question type
+- Student-facing prompt/question
+- Alternatives/options shown to learners
+- Correct answer
+
+Counts: Slide1=15, Slide2=18, Slide3=7, Slide4 terms=13
+
+========================================================================
+SLIDE 1 - IDENTIFY (MCQ)
+========================================================================
+Q1: The variable inside the parentheses when defining the function is a...
+  - Options: parameter, argument
+  - Correct: parameter
+
+Q2: These variables defined in the function definition are...
+  - Options: parameter, edge case
+  - Correct: parameter
+
+Q3: The placeholder "emailAddress" when setting up the function is a...
+  - Options: parameter, logic
+  - Correct: parameter
+
+Q4: The actual value "Maria" passed to the function is an...
+  - Options: argument, parameter
+  - Correct: argument
+
+Q5: The actual values 100 and 5 given to the function are...
+  - Options: argument, list
+  - Correct: argument
+
+Q6: The actual email address passed into the function is an...
+  - Options: argument, password
+  - Correct: argument
+
+Q7: The entire top line defining the function's name and inputs is the...
+  - Options: signature, loop
+  - Correct: signature
+
+Q8: The first line that declares the function is called the function...
+  - Options: signature, argument
+  - Correct: signature
+
+Q9: The blueprint of the function on the first line is its...
+  - Options: signature, variable
+  - Correct: signature
+
+Q10: The code inside the curly brackets { } that does the actual work is the...
+  - Options: body, head
+  - Correct: body
+
+Q11: The indented block of code that runs when called is the...
+  - Options: body, syntax
+  - Correct: body
+
+Q12: The steps written inside the function make up the function's...
+  - Options: body, calculation
+  - Correct: body
+
+Q13: The rules and decisions happening in this code are called the...
+  - Options: logic, words
+  - Correct: logic
+
+Q14: The way this code is structured to make decisions and loop is the programming...
+  - Options: logic, database
+  - Correct: logic
+
+Q15: The reasoning steps the computer takes to make this decision is the...
+  - Options: logic, data type
+  - Correct: logic
+
+========================================================================
+SLIDE 2 - DEFINE (HIGHLIGHT CHOICE)
+========================================================================
+Q1: We need to handle edge cases better. Please add a new parameter to this function.
+  - Alternatives: Alternative 1 (red), Alternative 2 (blue), Alternative 3 (green)
+  - Correct: Alternative 2 (blue)
+
+Q2: The system requirements changed. We need to remove the unused parameter from this file.
+  - Alternatives: Alternative 1 (yellow), Alternative 2 (purple), Alternative 3 (orange)
+  - Correct: Alternative 1 (yellow)
+
+Q3: To make the code cleaner, please rename this parameter so other developers understand what data it holds.
+  - Alternatives: Alternative 1 (blue), Alternative 2 (green), Alternative 3 (red)
+  - Correct: Alternative 3 (red)
+
+Q4: When you call this function, make sure you pass the user input as the second argument.
+  - Alternatives: Alternative 1 (green), Alternative 2 (blue), Alternative 3 (red)
+  - Correct: Alternative 2 (blue)
+
+Q5: The app is crashing because we are missing data. Please provide a default string as the argument here.
+  - Alternatives: Alternative 1 (yellow), Alternative 2 (orange), Alternative 3 (purple)
+  - Correct: Alternative 3 (purple)
+
+Q6: We need to update the argument we are sending to the database to fix the current exceptions.
+  - Alternatives: Alternative 1 (red), Alternative 2 (green), Alternative 3 (blue)
+  - Correct: Alternative 2 (green)
+
+Q7: We are getting errors across the app. We need to modify the signature of this function to match the new API.
+  - Alternatives: Alternative 1 (blue), Alternative 2 (green), Alternative 3 (yellow)
+  - Correct: Alternative 1 (blue)
+
+Q8: Update the function signature so the whole team knows exactly what inputs are required.
+  - Alternatives: Alternative 1 (red), Alternative 2 (purple), Alternative 3 (orange)
+  - Correct: Alternative 2 (purple)
+
+Q9: The compiler is throwing an exception. Please check the signature carefully to see if it matches the documentation.
+  - Alternatives: Alternative 1 (green), Alternative 2 (yellow), Alternative 3 (blue)
+  - Correct: Alternative 3 (blue)
+
+Q10: This code is causing speed issues. We need to refactor the function body for better performance.
+  - Alternatives: Alternative 1 (red), Alternative 2 (blue), Alternative 3 (green)
+  - Correct: Alternative 3 (green)
+
+Q11: Clean up the function body by removing all the old console logs before we launch.
+  - Alternatives: Alternative 1 (purple), Alternative 2 (yellow), Alternative 3 (orange)
+  - Correct: Alternative 1 (purple)
+
+Q12: There is a math bug causing exceptions. Please completely rewrite the function body.
+  - Alternatives: Alternative 1 (green), Alternative 2 (red), Alternative 3 (blue)
+  - Correct: Alternative 2 (red)
+
+Q13: We have new security requirements. Please validate the logic inside this block.
+  - Alternatives: Alternative 1 (red), Alternative 2 (green), Alternative 3 (blue)
+  - Correct: Alternative 2 (green)
+
+Q14: The application is failing on certain edge cases. We need to check the checking logic here.
+  - Alternatives: Alternative 1 (purple), Alternative 2 (yellow), Alternative 3 (orange)
+  - Correct: Alternative 1 (purple)
+
+Q15: We need to rewrite the validation logic to ensure the input isn't blank before moving forward.
+  - Alternatives: Alternative 1 (blue), Alternative 2 (green), Alternative 3 (red)
+  - Correct: Alternative 3 (red)
+
+Q16: To ensure scalability, we need to explicitly define the return type for this function.
+  - Alternatives: Alternative 1 (blue), Alternative 2 (yellow), Alternative 3 (green)
+  - Correct: Alternative 1 (blue)
+
+Q17: The database expects a true or false value. Please declare a boolean return type.
+  - Alternatives: Alternative 1 (red), Alternative 2 (purple), Alternative 3 (orange)
+  - Correct: Alternative 2 (purple)
+
+Q18: Define the return type properly so we don't encounter type exceptions later on.
+  - Alternatives: Alternative 1 (green), Alternative 2 (blue), Alternative 3 (yellow)
+  - Correct: Alternative 3 (yellow)
+
+========================================================================
+SLIDE 3 - ACTIONS (CHANGE CLASSIFICATION)
+========================================================================
+Q1: Classify the code change shown (before/after).
+  - Alternatives: Added a parameter, Refactored the body, Passed an argument
+  - Correct: Added a parameter
+
+Q2: Classify the code change shown (before/after).
+  - Alternatives: Removed a parameter, Declared a return type, Validated the logic
+  - Correct: Removed a parameter
+
+Q3: Classify the code change shown (before/after).
+  - Alternatives: Passed an argument, Modified the signature, Removed a parameter
+  - Correct: Passed an argument
+
+Q4: Classify the code change shown (before/after).
+  - Alternatives: Modified the signature, Passed an argument, Validated the logic
+  - Correct: Modified the signature
+
+Q5: Classify the code change shown (before/after).
+  - Alternatives: Refactored the body, Added a parameter, Declared a return type
+  - Correct: Refactored the body
+
+Q6: Classify the code change shown (before/after).
+  - Alternatives: Declared a return type, Passed an argument, Removed a parameter
+  - Correct: Declared a return type
+
+Q7: Classify the code change shown (before/after).
+  - Alternatives: Validated the logic, Modified the signature, Declared a return type
+  - Correct: Validated the logic
+
+========================================================================
+SLIDE 4 - REVIEW CIRCUIT
+========================================================================
+Word 1: Parameter / Parâmetro
+  - Type 1 (MCQ) options: Parâmetro, Assinatura, Variável
+  - Type 1 correct: Parâmetro
+  - Type 4 (Gap): We need to add a new ________ to the function to accept the user's email.
+  - Type 4 answer: parameter
+
+Word 2: Argument / Argumento
+  - Type 1 (MCQ) options: Argumento, Lógica, Tipo de retorno
+  - Type 1 correct: Argumento
+  - Type 4 (Gap): When you call the function, make sure to pass the correct ________.
+  - Type 4 answer: argument
+
+Word 3: Signature / Assinatura
+  - Type 1 (MCQ) options: Assinatura, Argumento, Corpo da função
+  - Type 1 correct: Assinatura
+  - Type 4 (Gap): The compiler gave an error because the function ________ doesn't match the new API.
+  - Type 4 answer: signature
+
+Word 4: Function Body / Corpo da função
+  - Type 1 (MCQ) options: Corpo da função, Parâmetro, Lógica
+  - Type 1 correct: Corpo da função
+  - Type 4 (Gap): All the calculation steps and loops are written inside the ________.
+  - Type 4 answer: function body
+
+Word 5: Return Type / Tipo de retorno
+  - Type 1 (MCQ) options: Tipo de retorno, Assinatura, Argumento
+  - Type 1 correct: Tipo de retorno
+  - Type 4 (Gap): If the function outputs text, the ________ must be declared as a string.
+  - Type 4 answer: return type
+
+Word 6: Logic / Lógica
+  - Type 1 (MCQ) options: Lógica, Corpo da função, Parâmetro
+  - Type 1 correct: Lógica
+  - Type 4 (Gap): The validation ________ is failing, so it's letting bad passwords through.
+  - Type 4 answer: logic
+
+Word 7: Add / Adicionar
+  - Type 1 (MCQ) options: Adicionar, Remover, Validar
+  - Type 1 correct: Adicionar
+  - Type 4 (Gap): Please ________ a new parameter to handle these edge cases.
+  - Type 4 answer: add
+
+Word 8: Remove / Remover
+  - Type 1 (MCQ) options: Remover, Refatorar, Passar
+  - Type 1 correct: Remover
+  - Type 4 (Gap): We don't use this variable anymore, so you can ________ it from the code.
+  - Type 4 answer: remove
+
+Word 9: Pass / Passar
+  - Type 1 (MCQ) options: Passar, Modificar, Declarar
+  - Type 1 correct: Passar
+  - Type 4 (Gap): When calling the API, you need to ________ the user's ID as the first argument.
+  - Type 4 answer: pass
+
+Word 10: Modify / Modificar
+  - Type 1 (MCQ) options: Modificar, Adicionar, Validar
+  - Type 1 correct: Modificar
+  - Type 4 (Gap): We must ________ the signature to fix the current exceptions we are seeing.
+  - Type 4 answer: modify
+
+Word 11: Refactor / Refatorar
+  - Type 1 (MCQ) options: Refatorar, Remover, Declarar
+  - Type 1 correct: Refatorar
+  - Type 4 (Gap): The code is slow, so we need to ________ the function body for better speed.
+  - Type 4 answer: refactor
+
+Word 12: Declare / Declarar
+  - Type 1 (MCQ) options: Declarar, Passar, Modificar
+  - Type 1 correct: Declarar
+  - Type 4 (Gap): Don't forget to ________ the return type so the database knows what data to expect.
+  - Type 4 answer: declare
+
+Word 13: Validate / Validar
+  - Type 1 (MCQ) options: Validar, Refatorar, Adicionar
+  - Type 1 correct: Validar
+  - Type 4 (Gap): We need to ________ the logic to ensure the system meets the new security requirements.
+  - Type 4 answer: validate

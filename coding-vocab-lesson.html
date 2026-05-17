@@ -1,0 +1,1776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Function Vocabulary · Dev English</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400;1,700&family=JetBrains+Mono:wght@400;500;700&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d0f0f;
+  --bg2: #111414;
+  --bg3: #161a1a;
+  --surface: #1a1f1f;
+  --surface2: #202626;
+  --border: #2a3232;
+  --border2: #333d3d;
+  --text: #e8edeb;
+  --text2: #9fb0ac;
+  --text3: #6a807c;
+  --neon: #00ffc8;
+  --neon2: #00e0b0;
+  --neon-dim: rgba(0,255,200,0.12);
+  --neon-glow: 0 0 20px rgba(0,255,200,0.3), 0 0 40px rgba(0,255,200,0.1);
+  --red: #ff4d6d;
+  --red-dim: rgba(255,77,109,0.15);
+  --yellow: #ffd166;
+  --yellow-dim: rgba(255,209,102,0.15);
+  --blue: #4ecdc4;
+  --blue-dim: rgba(78,205,196,0.15);
+  --purple: #c77dff;
+  --purple-dim: rgba(199,125,255,0.15);
+  --orange: #ff9a3c;
+  --orange-dim: rgba(255,154,60,0.15);
+  --green: #06d6a0;
+  --green-dim: rgba(6,214,160,0.15);
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-body: 'Geist', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 100vw; height: 100vh; overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  cursor: default;
+}
+
+/* SLIDE SYSTEM */
+.slide {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+}
+.slide.active { display: flex; }
+
+/* PROGRESS BAR */
+#progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  background: var(--neon);
+  box-shadow: var(--neon-glow);
+  transition: width 0.5s ease;
+  z-index: 1000;
+}
+
+/* SLIDE COUNTER */
+#slide-counter {
+  position: fixed;
+  bottom: 24px; left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 100;
+}
+.dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--border2);
+  transition: all 0.3s ease;
+}
+.dot.active {
+  background: var(--neon);
+  box-shadow: 0 0 8px var(--neon);
+}
+
+/* =========================================
+   SLIDE 1 — IDENTIFY (CAROUSEL)
+   ========================================= */
+#slide1 {
+  background: var(--bg);
+}
+
+.slide1-header {
+  padding: 32px 48px 0;
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  flex-shrink: 0;
+}
+.slide-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--neon);
+  opacity: 0.7;
+}
+.slide-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 900;
+  color: var(--text);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+.slide-title em {
+  font-style: italic;
+  color: var(--neon);
+}
+
+.carousel-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 24px 48px 60px;
+  gap: 24px;
+}
+
+.carousel-progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.carousel-num {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text3);
+}
+.carousel-track {
+  flex: 1;
+  height: 2px;
+  background: var(--border);
+  border-radius: 2px;
+}
+.carousel-fill {
+  height: 100%;
+  background: var(--neon);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+  box-shadow: 0 0 6px var(--neon);
+}
+
+.snippet-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+.snippet-lang {
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  padding: 8px 16px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text3);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.snippet-lang::before {
+  content: '';
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--neon);
+  box-shadow: 0 0 6px var(--neon);
+}
+.snippet-code {
+  padding: 20px 20px;
+  font-family: var(--font-mono);
+  font-size: clamp(12px, 1.4vw, 15px);
+  line-height: 1.7;
+  color: #a8c5c1;
+  white-space: pre;
+  overflow-x: auto;
+}
+.snippet-code .highlight { color: var(--neon); font-weight: 700; }
+.snippet-code .kw { color: #c792ea; }
+.snippet-code .fn { color: #82aaff; }
+.snippet-code .str { color: #c3e88d; }
+.snippet-code .num { color: var(--yellow); }
+.snippet-code .comment { color: var(--text3); font-style: italic; }
+.snippet-code .under { color: var(--neon); text-decoration: underline; text-underline-offset: 3px; }
+.snippet-question {
+  border-top: 1px solid var(--border);
+  padding: 14px 20px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text2);
+  font-style: italic;
+}
+
+.mcq-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.mcq-btn {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  padding: 16px 24px;
+  font-family: var(--font-mono);
+  font-size: clamp(13px, 1.6vw, 18px);
+  font-weight: 700;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+  letter-spacing: 0.05em;
+}
+.mcq-btn:hover {
+  border-color: var(--neon);
+  background: var(--neon-dim);
+  color: var(--neon);
+  box-shadow: inset 0 0 20px var(--neon-dim);
+  transform: translateY(-2px);
+}
+.mcq-btn.correct {
+  border-color: var(--neon);
+  background: var(--neon-dim);
+  color: var(--neon);
+  box-shadow: var(--neon-glow);
+}
+.mcq-btn.wrong {
+  border-color: var(--red);
+  background: var(--red-dim);
+  color: var(--red);
+  animation: shake 0.4s ease;
+}
+.mcq-btn:disabled { cursor: not-allowed; }
+
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-5px); }
+  80% { transform: translateX(5px); }
+}
+
+.feedback-msg {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  padding: 10px 0;
+  text-align: center;
+  min-height: 36px;
+  transition: all 0.3s;
+}
+.feedback-msg.correct { color: var(--neon); }
+.feedback-msg.wrong { color: var(--red); }
+
+.next-btn {
+  align-self: flex-end;
+  background: transparent;
+  border: 1px solid var(--neon);
+  color: var(--neon);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 10px 24px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 2px;
+}
+.next-btn:hover {
+  background: var(--neon);
+  color: var(--bg);
+  box-shadow: var(--neon-glow);
+}
+.next-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+/* =========================================
+   SLIDE 2 — DEFINITION (COLOR HIGHLIGHT)
+   ========================================= */
+#slide2 {
+  background: var(--bg);
+}
+
+.def-layout {
+  flex: 1;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 0;
+  overflow: hidden;
+}
+
+.def-header {
+  padding: 28px 48px 20px;
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.def-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  overflow: hidden;
+}
+
+.def-left {
+  border-right: 1px solid var(--border);
+  padding: 28px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow: hidden;
+}
+
+.def-right {
+  padding: 28px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+}
+
+.prompt-box {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-left: 3px solid var(--neon);
+  padding: 16px 20px;
+  border-radius: 0 4px 4px 0;
+}
+.prompt-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--neon);
+  margin-bottom: 8px;
+  opacity: 0.7;
+}
+.prompt-text {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+}
+.prompt-text strong {
+  color: var(--neon);
+  font-weight: 600;
+}
+
+.def-code-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  flex: 1;
+}
+.def-code-inner {
+  padding: 16px 20px;
+  font-family: var(--font-mono);
+  font-size: clamp(11px, 1.2vw, 14px);
+  line-height: 1.8;
+  white-space: pre;
+  overflow-x: auto;
+}
+
+/* highlight spans */
+.hl { border-radius: 2px; padding: 1px 3px; cursor: default; transition: all 0.2s; position: relative; }
+.hl-red { background: rgba(255,77,109,0.2); color: #ff8fa3; border-bottom: 2px solid var(--red); }
+.hl-blue { background: rgba(78,205,196,0.2); color: #7ce0da; border-bottom: 2px solid var(--blue); }
+.hl-green { background: rgba(6,214,160,0.2); color: #5ee8c4; border-bottom: 2px solid var(--green); }
+.hl-yellow { background: rgba(255,209,102,0.2); color: #ffe08a; border-bottom: 2px solid var(--yellow); }
+.hl-purple { background: rgba(199,125,255,0.2); color: #d9a0ff; border-bottom: 2px solid var(--purple); }
+.hl-orange { background: rgba(255,154,60,0.2); color: #ffb870; border-bottom: 2px solid var(--orange); }
+
+/* code syntax */
+.ck { color: #c792ea; }
+.cf { color: #82aaff; }
+.cs { color: #c3e88d; }
+.cn { color: var(--yellow); }
+.cc { color: var(--text3); font-style: italic; }
+.ct { color: var(--text2); }
+
+.alts-section-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text3);
+}
+.alts-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.alt-btn {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  padding: 14px 18px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+.alt-btn:hover { border-color: var(--border2); transform: translateX(4px); }
+.alt-color-dot {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 0 8px currentColor;
+}
+.alt-btn-label {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text2);
+}
+.alt-btn.correct { border-color: var(--neon); background: var(--neon-dim); }
+.alt-btn.correct .alt-btn-label { color: var(--neon); }
+.alt-btn.wrong { border-color: var(--red); background: var(--red-dim); animation: shake 0.4s ease; }
+.alt-btn.wrong .alt-btn-label { color: var(--red); }
+.alt-btn:disabled { cursor: not-allowed; }
+
+.def-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 48px;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.def-counter {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text3);
+}
+.def-feedback {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  min-height: 20px;
+}
+.def-feedback.correct { color: var(--neon); }
+.def-feedback.wrong { color: var(--red); }
+
+/* =========================================
+   SLIDE 3 — ACTIONS (ANIMATION)
+   ========================================= */
+#slide3 { background: var(--bg); }
+
+.action-layout {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 28px 48px 60px;
+  gap: 20px;
+}
+
+.action-header {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.action-stage {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 16px;
+  align-items: center;
+  min-height: 0;
+}
+
+.code-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.code-panel-label {
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  padding: 7px 14px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text3);
+  flex-shrink: 0;
+}
+.code-panel-body {
+  padding: 16px;
+  font-family: var(--font-mono);
+  font-size: clamp(11px, 1.2vw, 13px);
+  line-height: 1.8;
+  color: var(--text2);
+  flex: 1;
+  white-space: pre;
+  overflow-x: auto;
+}
+.code-panel-body .diff-add { color: var(--neon); background: var(--neon-dim); display: block; }
+.code-panel-body .diff-remove { color: var(--red); background: var(--red-dim); text-decoration: line-through; display: block; }
+.code-panel-body .ck { color: #c792ea; }
+.code-panel-body .cf { color: #82aaff; }
+.code-panel-body .cs { color: #c3e88d; }
+.code-panel-body .cn { color: var(--yellow); }
+.code-panel-body .cc { color: var(--text3); font-style: italic; }
+
+.arrow-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.arrow-icon {
+  font-size: 28px;
+  color: var(--neon);
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+.arrow-icon.visible { opacity: 1; }
+.play-btn {
+  background: var(--neon);
+  color: var(--bg);
+  border: none;
+  border-radius: 50%;
+  width: 52px; height: 52px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--neon-glow);
+}
+.play-btn:hover { transform: scale(1.1); }
+.play-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.action-alts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  flex-shrink: 0;
+}
+.action-alt-btn {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  padding: 14px 16px;
+  font-family: var(--font-mono);
+  font-size: clamp(11px, 1.2vw, 14px);
+  color: var(--text2);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+.action-alt-btn:hover {
+  border-color: var(--neon);
+  background: var(--neon-dim);
+  color: var(--neon);
+  transform: translateY(-2px);
+}
+.action-alt-btn.correct { border-color: var(--neon); background: var(--neon-dim); color: var(--neon); box-shadow: var(--neon-glow); }
+.action-alt-btn.wrong { border-color: var(--red); background: var(--red-dim); color: var(--red); animation: shake 0.4s ease; }
+.action-alt-btn:disabled { cursor: not-allowed; }
+
+.action-progress {
+  display: flex; justify-content: space-between; align-items: center;
+  flex-shrink: 0;
+}
+.action-counter {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text3);
+}
+.action-feedback {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  min-height: 18px;
+}
+.action-feedback.correct { color: var(--neon); }
+.action-feedback.wrong { color: var(--red); }
+
+/* =========================================
+   SLIDE 4 — REVIEW CIRCUIT
+   ========================================= */
+#slide4 { background: var(--bg); }
+
+.review-layout {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 28px 48px 60px;
+  gap: 20px;
+}
+.review-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.review-header-left { display: flex; align-items: baseline; gap: 16px; }
+
+.word-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 8px;
+  flex-shrink: 0;
+}
+.word-chip {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 6px 10px;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+  color: var(--text3);
+  text-align: center;
+  transition: all 0.3s;
+}
+.word-chip.t1 { border-color: var(--border2); color: var(--text3); }
+.word-chip.t2 { border-color: var(--blue); color: var(--blue); background: var(--blue-dim); }
+.word-chip.t3 { border-color: var(--yellow); color: var(--yellow); background: var(--yellow-dim); }
+.word-chip.t4 { border-color: var(--purple); color: var(--purple); background: var(--purple-dim); }
+.word-chip.done { border-color: var(--neon); color: var(--neon); background: var(--neon-dim); }
+
+.flashcard-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  min-height: 0;
+}
+
+.type-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 2px;
+  border: 1px solid;
+}
+.type-badge.t1 { color: var(--blue); border-color: var(--blue); background: var(--blue-dim); }
+.type-badge.t2 { color: var(--yellow); border-color: var(--yellow); background: var(--yellow-dim); }
+.type-badge.t3 { color: var(--purple); border-color: var(--purple); background: var(--purple-dim); }
+.type-badge.t4 { color: var(--orange); border-color: var(--orange); background: var(--orange-dim); }
+
+.flashcard {
+  width: 100%;
+  max-width: 560px;
+  perspective: 1000px;
+}
+.flashcard-inner {
+  position: relative;
+  width: 100%;
+  min-height: 160px;
+  transition: transform 0.5s ease;
+  transform-style: preserve-3d;
+}
+.flashcard.flipped .flashcard-inner { transform: rotateX(180deg); }
+.flashcard-front, .flashcard-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+  padding: 32px;
+  min-height: 160px;
+}
+.flashcard-back {
+  transform: rotateX(180deg);
+  border-color: var(--neon);
+  background: var(--neon-dim);
+}
+.card-word {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  text-align: center;
+}
+.flashcard-back .card-word { color: var(--neon); }
+.card-subtext {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text3);
+  letter-spacing: 0.1em;
+}
+
+/* MCQ for type 1 */
+.fc-mcq {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 100%;
+  max-width: 560px;
+}
+.fc-mcq-btn {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  padding: 14px 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+.fc-mcq-btn:hover { border-color: var(--neon); color: var(--neon); background: var(--neon-dim); }
+.fc-mcq-btn.correct { border-color: var(--neon); color: var(--neon); background: var(--neon-dim); }
+.fc-mcq-btn.wrong { border-color: var(--red); color: var(--red); background: var(--red-dim); animation: shake 0.4s; }
+
+/* Gap fill for type 4 */
+.gap-sentence {
+  font-family: var(--font-body);
+  font-size: clamp(15px, 2vw, 22px);
+  line-height: 1.6;
+  color: var(--text);
+  text-align: center;
+  max-width: 560px;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  padding: 28px 32px;
+}
+.gap-blank {
+  display: inline-block;
+  width: 120px;
+  border-bottom: 2px solid var(--neon);
+  margin: 0 8px;
+  vertical-align: bottom;
+}
+.gap-blank.revealed {
+  color: var(--neon);
+  font-weight: 700;
+  font-family: var(--font-mono);
+  border-color: transparent;
+}
+
+.review-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.review-btn {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid;
+}
+.review-btn.primary {
+  background: var(--neon);
+  color: var(--bg);
+  border-color: var(--neon);
+  box-shadow: var(--neon-glow);
+}
+.review-btn.primary:hover { transform: translateY(-2px); }
+.review-btn.secondary { background: transparent; color: var(--text2); border-color: var(--border2); }
+.review-btn.secondary:hover { border-color: var(--text2); color: var(--text); }
+.review-btn.correct-btn { background: transparent; color: var(--neon); border-color: var(--neon); }
+.review-btn.wrong-btn { background: transparent; color: var(--red); border-color: var(--red); }
+.review-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+.review-status {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text3);
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* COMPLETE SCREEN */
+.complete-screen {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 24px;
+  text-align: center;
+  padding: 48px;
+}
+.complete-screen.visible { display: flex; }
+.complete-icon {
+  font-size: 64px;
+  line-height: 1;
+  filter: drop-shadow(0 0 30px var(--neon));
+  animation: pulse 2s ease infinite;
+}
+@keyframes pulse {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+.complete-title {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 6vw, 72px);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: var(--neon);
+  text-shadow: 0 0 40px rgba(0,255,200,0.4);
+}
+.complete-sub {
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--text2);
+  max-width: 400px;
+  line-height: 1.6;
+}
+
+/* SLIDE ENTER ANIMATIONS */
+.slide.active .slide-title,
+.slide.active .carousel-container,
+.slide.active .def-body,
+.slide.active .action-stage,
+.slide.active .flashcard-area {
+  animation: fadeUp 0.4s ease both;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* SCORE BADGE */
+#score-badge {
+  position: fixed;
+  top: 16px; right: 24px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text3);
+  z-index: 100;
+}
+#score-badge span { color: var(--neon); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<div id="progress-bar" style="width:25%"></div>
+<div id="score-badge">score <span id="score-num">0</span></div>
+<div id="slide-counter">
+  <div class="dot active" data-s="0"></div>
+  <div class="dot" data-s="1"></div>
+  <div class="dot" data-s="2"></div>
+  <div class="dot" data-s="3"></div>
+</div>
+
+<!-- ===================== SLIDE 1 ===================== -->
+<div id="slide1" class="slide active">
+  <div class="slide1-header">
+    <span class="slide-label">01 —</span>
+    <h1 class="slide-title"><em>Identify</em> the concept</h1>
+  </div>
+  <div class="carousel-container">
+    <div class="carousel-progress">
+      <span class="carousel-num" id="s1-num">1 / 15</span>
+      <div class="carousel-track"><div class="carousel-fill" id="s1-fill" style="width:6.66%"></div></div>
+    </div>
+    <div class="snippet-card">
+      <div class="snippet-lang" id="s1-lang">javascript</div>
+      <pre class="snippet-code" id="s1-code"></pre>
+      <div class="snippet-question" id="s1-question"></div>
+    </div>
+    <div class="mcq-row">
+      <button class="mcq-btn" id="s1-opt0" onclick="s1Answer(0)"></button>
+      <button class="mcq-btn" id="s1-opt1" onclick="s1Answer(1)"></button>
+    </div>
+    <div class="feedback-msg" id="s1-feedback"></div>
+    <button class="next-btn" id="s1-next" onclick="s1Next()" disabled>Next →</button>
+  </div>
+</div>
+
+<!-- ===================== SLIDE 2 ===================== -->
+<div id="slide2" class="slide">
+  <div class="def-layout">
+    <div class="def-header">
+      <span class="slide-label">02 —</span>
+      <h1 class="slide-title"><em>Define</em> the element</h1>
+    </div>
+    <div class="def-body">
+      <div class="def-left">
+        <div class="prompt-box">
+          <div class="prompt-label">Manager's request</div>
+          <div class="prompt-text" id="s2-prompt"></div>
+        </div>
+        <div class="def-code-block" style="flex:1">
+          <div class="snippet-lang" id="s2-lang">typescript</div>
+          <pre class="def-code-inner" id="s2-code"></pre>
+        </div>
+      </div>
+      <div class="def-right">
+        <div class="alts-section-label">Which element is highlighted?</div>
+        <div class="alts-grid" id="s2-alts"></div>
+      </div>
+    </div>
+    <div class="def-nav">
+      <span class="def-counter" id="s2-counter">1 / 18</span>
+      <span class="def-feedback" id="s2-feedback"></span>
+      <button class="next-btn" id="s2-next" onclick="s2Next()" disabled>Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== SLIDE 3 ===================== -->
+<div id="slide3" class="slide">
+  <div class="action-layout">
+    <div class="action-header">
+      <span class="slide-label">03 —</span>
+      <h1 class="slide-title"><em>Name</em> the action</h1>
+    </div>
+    <div class="action-stage">
+      <div class="code-panel">
+        <div class="code-panel-label">Before</div>
+        <pre class="code-panel-body" id="s3-before"></pre>
+      </div>
+      <div class="arrow-col">
+        <button class="play-btn" id="s3-play" onclick="s3Play()">▶</button>
+        <div class="arrow-icon" id="s3-arrow">→</div>
+      </div>
+      <div class="code-panel">
+        <div class="code-panel-label">After</div>
+        <pre class="code-panel-body" id="s3-after"></pre>
+      </div>
+    </div>
+    <div class="action-alts" id="s3-alts"></div>
+    <div class="action-progress">
+      <span class="action-counter" id="s3-counter">1 / 7</span>
+      <span class="action-feedback" id="s3-feedback"></span>
+      <button class="next-btn" id="s3-next" onclick="s3Next()" disabled>Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== SLIDE 4 ===================== -->
+<div id="slide4" class="slide">
+  <div class="review-layout" id="review-main">
+    <div class="review-header">
+      <div class="review-header-left">
+        <span class="slide-label">04 —</span>
+        <h1 class="slide-title"><em>Review</em> circuit</h1>
+      </div>
+    </div>
+    <div class="word-grid" id="s4-grid"></div>
+    <div class="flashcard-area" id="s4-fc-area">
+      <div class="type-badge t1" id="s4-type-badge">Type 1 — MCQ</div>
+      <div class="flashcard" id="s4-card">
+        <div class="flashcard-inner">
+          <div class="flashcard-front"><div class="card-word" id="s4-front"></div><div class="card-subtext" id="s4-front-sub"></div></div>
+          <div class="flashcard-back"><div class="card-word" id="s4-back"></div><div class="card-subtext" id="s4-back-sub"></div></div>
+        </div>
+      </div>
+      <div class="fc-mcq" id="s4-mcq"></div>
+      <div class="gap-sentence" id="s4-gap" style="display:none"></div>
+    </div>
+    <div class="review-actions" id="s4-actions"></div>
+    <div class="review-status" id="s4-status"></div>
+  </div>
+  <div class="complete-screen" id="complete-screen">
+    <div class="complete-icon">⚡</div>
+    <div class="complete-title">All memorized!</div>
+    <div class="complete-sub">You've mastered all 13 vocabulary items across all 4 circuit types. Excellent work.</div>
+  </div>
+</div>
+
+<script>
+// ======================== GLOBAL ========================
+let currentSlide = 0;
+let totalScore = 0;
+const totalSlides = 4;
+
+// ======================== SOUND API ========================
+let audioCtx = null;
+
+function ensureAudioCtx() {
+  if (!audioCtx) {
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if (!Ctx) return null;
+    audioCtx = new Ctx();
+  }
+  return audioCtx;
+}
+
+function playSoundNow(type, ctx) {
+  const osc = ctx.createOscillator();
+  const gainNode = ctx.createGain();
+  const t = ctx.currentTime;
+
+  osc.connect(gainNode);
+  gainNode.connect(ctx.destination);
+
+  if (type === 'correct') {
+    // Pleasant ascending chime
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(523.25, t); // C5
+    osc.frequency.exponentialRampToValueAtTime(1046.50, t + 0.1); // C6
+    gainNode.gain.setValueAtTime(0.1, t);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, t + 0.3);
+    osc.start(t);
+    osc.stop(t + 0.3);
+  } else if (type === 'wrong') {
+    // Low error buzz
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(150, t);
+    osc.frequency.exponentialRampToValueAtTime(100, t + 0.2);
+    gainNode.gain.setValueAtTime(0.1, t);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
+    osc.start(t);
+    osc.stop(t + 0.2);
+  }
+}
+
+function playSound(type) {
+  const ctx = ensureAudioCtx();
+  if (!ctx) return;
+
+  if (ctx.state === 'suspended') {
+    ctx.resume()
+      .then(() => playSoundNow(type, ctx))
+      .catch(() => {});
+    return;
+  }
+
+  playSoundNow(type, ctx);
+}
+
+function goToSlide(n) {
+  if (n < 0 || n >= totalSlides) return;
+  document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.dot').forEach((d,i) => d.classList.toggle('active', i === n));
+  document.getElementById('slide' + (n+1)).classList.add('active');
+  document.getElementById('progress-bar').style.width = ((n+1)/totalSlides*100) + '%';
+  currentSlide = n;
+  if (n === 1 && !s2Loaded) s2Load();
+  if (n === 2 && !s3Loaded) s3Load();
+  if (n === 3 && !s4Loaded) s4Load();
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') goToSlide(currentSlide + 1);
+  if (e.key === 'ArrowLeft') goToSlide(currentSlide - 1);
+});
+
+function addScore(n) {
+  totalScore += n;
+  document.getElementById('score-num').textContent = totalScore;
+}
+
+// ======================== SLIDE 1 ========================
+const s1Items = [
+  // Parameter (3)
+  { lang:'javascript', code:`<span class="kw">function</span> <span class="fn">greetUser</span>( <span class="under">firstName</span> ) {\n  <span class="cc">// placeholder inside the parentheses</span>\n}`, q:'The variable inside the parentheses when defining the function is a...', correct:'parameter', wrong:'argument' },
+  { lang:'python', code:`<span class="kw">def</span> <span class="fn">calculate_total</span>( <span class="under">price, tax</span> ):\n    <span class="cc"># variables defined here are called...</span>`, q:'These variables defined in the function definition are...', correct:'parameter', wrong:'edge case' },
+  { lang:'javascript', code:`<span class="kw">function</span> <span class="fn">sendEmail</span>( <span class="under">emailAddress</span> ) {\n  <span class="cc">// placeholder variable in function setup</span>\n}`, q:'The placeholder "emailAddress" when setting up the function is a...', correct:'parameter', wrong:'logic' },
+  // Argument (3)
+  { lang:'javascript', code:`<span class="cc">// Calling the function with a real value:</span>\n<span class="fn">greetUser</span>( <span class="under">"Maria"</span> );\n<span class="cc">// The actual value "Maria" given here is an...</span>`, q:'The actual value "Maria" passed to the function is an...', correct:'argument', wrong:'parameter' },
+  { lang:'python', code:`<span class="cc"># Calling with real numbers:</span>\n<span class="fn">calculate_total</span>( <span class="under">100, 5</span> );\n<span class="cc"># The actual numbers given here are...</span>`, q:'The actual values 100 and 5 given to the function are...', correct:'argument', wrong:'list' },
+  { lang:'javascript', code:`<span class="fn">sendEmail</span>( <span class="under">"student@school.com"</span> );\n<span class="cc">// The actual email address passed here is an...</span>`, q:'The actual email address passed into the function is an...', correct:'argument', wrong:'password' },
+  // Signature (3)
+  { lang:'javascript', code:`<span class="under"><span class="kw">function</span> <span class="fn">getStudentScore</span>( studentID )</span>\n{\n  <span class="kw">return</span> score;\n}\n<span class="cc">// The entire top line defines the function's name and inputs</span>`, q:'The entire top line defining the function\'s name and inputs is the...', correct:'signature', wrong:'loop' },
+  { lang:'python', code:`<span class="under"><span class="kw">def</span> <span class="fn">play_music</span>( song_name ):</span>\n    <span class="kw">print</span>(<span class="str">"Playing music..."</span>)\n\n<span class="cc"># The first line that declares the function</span>`, q:'The first line that declares the function is called the function...', correct:'signature', wrong:'argument' },
+  { lang:'javascript', code:`<span class="under"><span class="kw">function</span> <span class="fn">printTicket</span>( ticketNumber )</span>\n{\n  <span class="cc">// code to print...</span>\n}\n<span class="cc">// The blueprint of the function on line 1</span>`, q:'The blueprint of the function on the first line is its...', correct:'signature', wrong:'variable' },
+  // Body (3)
+  { lang:'javascript', code:`<span class="kw">function</span> <span class="fn">sayHello</span>() {\n  <span class="under">console.log(<span class="str">"Hello!"</span>); <span class="cc">// &lt;--- This section</span></span>\n  <span class="under"><span class="kw">return</span> <span class="kw">true</span>;           <span class="cc">// &lt;---</span></span>\n}\n<span class="cc">// The code inside { } that does the actual work</span>`, q:'The code inside the curly brackets { } that does the actual work is the...', correct:'body', wrong:'head' },
+  { lang:'python', code:`<span class="kw">def</span> <span class="fn">calculate_age</span>(birth_year):\n    <span class="under">current_year = <span class="num">2024</span>                <span class="cc"># &lt;---</span></span>\n    <span class="under">age = current_year - birth_year    <span class="cc"># &lt;---</span></span>\n    <span class="under"><span class="kw">return</span> age                         <span class="cc"># &lt;---</span></span>\n<span class="cc"># The indented block that runs when called</span>`, q:'The indented block of code that runs when called is the...', correct:'body', wrong:'syntax' },
+  { lang:'javascript', code:`<span class="kw">function</span> <span class="fn">add</span>(a, b) {\n  <span class="under"><span class="kw">let</span> sum = a + b;   <span class="cc">// &lt;--- This section</span></span>\n  <span class="under"><span class="kw">return</span> sum;        <span class="cc">// &lt;---</span></span>\n}\n<span class="cc">// The steps written inside the function</span>`, q:'The steps written inside the function make up the function\'s...', correct:'body', wrong:'calculation' },
+  // Logic (3)
+  { lang:'javascript', code:`<span class="kw">if</span> (score >= <span class="num">50</span>) {\n  studentPasses = <span class="kw">true</span>;\n} <span class="kw">else</span> {\n  studentPasses = <span class="kw">false</span>;\n}\n<span class="cc">// The rules and decisions in this code are called...</span>`, q:'The rules and decisions happening in this code are called the...', correct:'logic', wrong:'words' },
+  { lang:'python', code:`<span class="kw">while</span> (timer > <span class="num">0</span>):\n    <span class="kw">print</span>(<span class="str">"Keep going!"</span>)\n    timer = timer - <span class="num">1</span>\n\n<span class="cc"># How this code makes decisions and loops</span>`, q:'The way this code is structured to make decisions and loop is the programming...', correct:'logic', wrong:'database' },
+  { lang:'javascript', code:`<span class="kw">if</span> (userAge >= <span class="num">18</span> && hasTicket == <span class="kw">true</span>) {\n  <span class="fn">openDoors</span>();\n}\n<span class="cc">// The reasoning steps to decide if it should open doors</span>`, q:'The reasoning steps the computer takes to make this decision is the...', correct:'logic', wrong:'data type' },
+];
+// Shared shuffle utility (defined early, used by all slides)
+function shuffle(a) {
+  for (let i=a.length-1;i>0;i--) { const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+
+// Shuffle s1Items at startup while preventing 3+ consecutive same-concept items
+(function shuffleS1() {
+  // tag each item with its concept group
+  const concepts = ['parameter','parameter','parameter','argument','argument','argument',
+                    'signature','signature','signature','body','body','body','logic','logic','logic'];
+  s1Items.forEach((it,i) => it._concept = concepts[i]);
+  shuffle(s1Items);
+  // fix runs: if 3 in a row share a concept, swap the 3rd with the next different one
+  for (let i=2; i<s1Items.length; i++) {
+    if (s1Items[i]._concept === s1Items[i-1]._concept && s1Items[i]._concept === s1Items[i-2]._concept) {
+      for (let j=i+1; j<s1Items.length; j++) {
+        if (s1Items[j]._concept !== s1Items[i]._concept) {
+          [s1Items[i], s1Items[j]] = [s1Items[j], s1Items[i]];
+          break;
+        }
+      }
+    }
+  }
+})();
+
+let s1Idx = 0;
+let s1Answered = false;
+
+function s1Render() {
+  const item = s1Items[s1Idx];
+  document.getElementById('s1-lang').innerHTML = `<span style="width:8px;height:8px;border-radius:50%;background:var(--neon);box-shadow:0 0 6px var(--neon);display:inline-block;margin-right:8px;flex-shrink:0"></span>${item.lang}`;
+  document.getElementById('s1-code').innerHTML = item.code;
+  document.getElementById('s1-question').textContent = item.q;
+  document.getElementById('s1-num').textContent = (s1Idx+1) + ' / ' + s1Items.length;
+  document.getElementById('s1-fill').style.width = ((s1Idx+1)/s1Items.length*100) + '%';
+  // Shuffle options
+  const opts = [item.correct, item.wrong];
+  if (Math.random() > 0.5) opts.reverse();
+  const btns = [document.getElementById('s1-opt0'), document.getElementById('s1-opt1')];
+  btns.forEach((b,i) => {
+    b.textContent = opts[i];
+    b.className = 'mcq-btn';
+    b.disabled = false;
+    b.dataset.val = opts[i];
+  });
+  document.getElementById('s1-feedback').textContent = '';
+  document.getElementById('s1-feedback').className = 'feedback-msg';
+  document.getElementById('s1-next').disabled = true;
+  s1Answered = false;
+}
+
+function s1Answer(idx) {
+  if (s1Answered) return;
+  s1Answered = true;
+  const item = s1Items[s1Idx];
+  const btn = document.getElementById('s1-opt' + idx);
+  const other = document.getElementById('s1-opt' + (1-idx));
+  const chosen = btn.dataset.val;
+  if (chosen === item.correct) {
+    playSound('correct');
+    btn.classList.add('correct');
+    document.getElementById('s1-feedback').textContent = '✓ Correct! "' + item.correct + '" is right.';
+    document.getElementById('s1-feedback').className = 'feedback-msg correct';
+    addScore(1);
+  } else {
+    playSound('wrong');
+    btn.classList.add('wrong');
+    other.classList.add('correct');
+    document.getElementById('s1-feedback').textContent = '✗ The correct answer is "' + item.correct + '"';
+    document.getElementById('s1-feedback').className = 'feedback-msg wrong';
+  }
+  btn.disabled = true; other.disabled = true;
+  document.getElementById('s1-next').disabled = false;
+}
+
+function s1Next() {
+  s1Idx++;
+  if (s1Idx >= s1Items.length) {
+    s1Idx = s1Items.length - 1;
+    document.getElementById('s1-next').textContent = 'Done ✓';
+    document.getElementById('s1-next').disabled = true;
+    return;
+  }
+  s1Render();
+}
+
+s1Render();
+
+// ======================== SLIDE 2 ========================
+let s2Loaded = false;
+const COLOR_MAP = {
+  red: { cls:'hl-red', dot:'#ff4d6d' },
+  blue: { cls:'hl-blue', dot:'#4ecdc4' },
+  green: { cls:'hl-green', dot:'#06d6a0' },
+  yellow: { cls:'hl-yellow', dot:'#ffd166' },
+  purple: { cls:'hl-purple', dot:'#c77dff' },
+  orange: { cls:'hl-orange', dot:'#ff9a3c' },
+};
+
+const s2Items = [
+  // PARAMETER
+  { prompt:'We need to handle edge cases better. Please add a new <strong>parameter</strong> to this function.',
+    lang:'typescript',
+    code: `<span class="ck">function</span> <span class="cf">calculateTotal</span>( <span class="hl hl-blue">basePrice</span> ) {\n  <span class="hl hl-red">let tax = 0.10;\n  return basePrice + (basePrice * tax);</span>\n}`,
+    alts:[{color:'red',label:'Alternative 1',correct:false},{color:'blue',label:'Alternative 2',correct:true},{color:'green',label:'Alternative 3',correct:false}],
+    // green not in code, so we patch
+    codeAlt:`<span class="ck">function</span> <span class="cf"><span class="hl hl-green">calculateTotal</span></span>( <span class="hl hl-blue">basePrice</span> ) {\n  <span class="hl hl-red">let tax = 0.10;\n  return basePrice + (basePrice * tax);</span>\n}`
+  },
+  { prompt:'The system requirements changed. We need to remove the unused <strong>parameter</strong> from this file.',
+    lang:'typescript',
+    codeAlt:`<span class="ck">function</span> <span class="cf"><span class="hl hl-orange">sendNotification</span></span>( <span class="hl hl-yellow">emailAddress, isUrgent</span> ) {\n  <span class="hl hl-purple">mailer.send(emailAddress);</span>\n}`,
+    alts:[{color:'yellow',label:'Alternative 1',correct:true},{color:'purple',label:'Alternative 2',correct:false},{color:'orange',label:'Alternative 3',correct:false}]
+  },
+  { prompt:'To make the code cleaner, please rename this <strong>parameter</strong> so other developers understand what data it holds.',
+    lang:'typescript',
+    codeAlt:`<span class="ck">function</span> <span class="cf"><span class="hl hl-green">verifyAccount</span></span>( <span class="hl hl-red">x</span> ) {\n  <span class="hl hl-blue">if (x === true) {\n    unlockAccount();\n  }</span>\n}`,
+    alts:[{color:'blue',label:'Alternative 1',correct:false},{color:'green',label:'Alternative 2',correct:false},{color:'red',label:'Alternative 3',correct:true}]
+  },
+  // ARGUMENT
+  { prompt:'When you call this function, make sure you pass the user input as the second <strong>argument</strong>.',
+    lang:'typescript',
+    codeAlt:`<span class="cc">// Calling the function to save the data</span>\n<span class="hl hl-green">saveUserProfile</span>( <span class="hl hl-blue">"Daniel", userAgeInput</span> );`,
+    alts:[{color:'green',label:'Alternative 1',correct:false},{color:'blue',label:'Alternative 2',correct:true},{color:'red',label:'Alternative 3',correct:false}],
+    codePatch:`<span class="cc"><span class="hl hl-red">// Calling the function to save the data</span></span>\n<span class="hl hl-green">saveUserProfile</span>( <span class="hl hl-blue">"Daniel", userAgeInput</span> );`
+  },
+  { prompt:'The app is crashing because we are missing data. Please provide a default string as the <strong>argument</strong> here.',
+    lang:'typescript',
+    codeAlt:`<span class="hl hl-yellow">let greetingMessage =</span> <span class="hl hl-orange">generateGreeting</span>( <span class="hl hl-purple">""</span> );\nconsole.log(greetingMessage);`,
+    alts:[{color:'yellow',label:'Alternative 1',correct:false},{color:'orange',label:'Alternative 2',correct:false},{color:'purple',label:'Alternative 3',correct:true}]
+  },
+  { prompt:'We need to update the <strong>argument</strong> we are sending to the database to fix the current exceptions.',
+    lang:'typescript',
+    codeAlt:`<span class="hl hl-red">database.connect();</span>\ndatabase.<span class="hl hl-blue">fetchRecord</span>( <span class="hl hl-green">1054</span> );`,
+    alts:[{color:'red',label:'Alternative 1',correct:false},{color:'green',label:'Alternative 2',correct:true},{color:'blue',label:'Alternative 3',correct:false}]
+  },
+  // SIGNATURE
+  { prompt:'We are getting errors across the app. We need to modify the <strong>signature</strong> of this function to match the new API.',
+    lang:'typescript',
+    codeAlt:`<span class="hl hl-blue"><span class="ck">function</span> <span class="cf">fetchUserData</span>( userID, token )</span> {\n  <span class="hl hl-green">let data = api.get(userID, token);</span>\n  return data;\n}`,
+    alts:[{color:'blue',label:'Alternative 1',correct:true},{color:'green',label:'Alternative 2',correct:false},{color:'yellow',label:'Alternative 3',correct:false}],
+    codePatch2: `<span class="hl hl-blue"><span class="ck">function</span> <span class="cf">fetchUserData</span>( <span class="hl hl-yellow">userID, token</span> )</span> {\n  <span class="hl hl-green">let data = api.get(userID, token);</span>\n  return data;\n}`
+  },
+  { prompt:'Update the function <strong>signature</strong> so the whole team knows exactly what inputs are required.',
+    lang:'typescript',
+    codeAlt:`<span class="hl hl-red">security.encrypt(creditCardNumber);\nbank.send(creditCardNumber);</span>\n<span class="hl hl-purple"><span class="ck">function</span> <span class="cf">processPayment</span>( <span class="hl hl-orange">creditCardNumber</span> )</span> {`,
+    codePatch3:`<span class="hl hl-purple"><span class="ck">function</span> <span class="cf">processPayment</span>( <span class="hl hl-orange">creditCardNumber</span> )</span> {\n  <span class="hl hl-red">security.encrypt(creditCardNumber);\n  bank.send(creditCardNumber);</span>\n}`,
+    alts:[{color:'red',label:'Alternative 1',correct:false},{color:'purple',label:'Alternative 2',correct:true},{color:'orange',label:'Alternative 3',correct:false}]
+  },
+  { prompt:'The compiler is throwing an exception. Please check the <strong>signature</strong> carefully to see if it matches the documentation.',
+    lang:'typescript',
+    codeAlt:`<span class="hl hl-blue"><span class="ck">function</span> <span class="cf">createNewFile</span>( <span class="hl hl-green">fileName, fileType</span> )</span> {\n  <span class="hl hl-yellow">system.allocateSpace();</span>\n  system.write(fileName, fileType);\n}`,
+    alts:[{color:'green',label:'Alternative 1',correct:false},{color:'yellow',label:'Alternative 2',correct:false},{color:'blue',label:'Alternative 3',correct:true}]
+  },
+  // FUNCTION BODY
+  { prompt:'This code is causing speed issues. We need to refactor the <strong>function body</strong> for better performance.',
+    lang:'typescript',
+    codeAlt:`<span class="hl hl-red"><span class="ck">function</span> <span class="cf">analyzeData</span></span>( <span class="hl hl-blue">dataArray</span> ) {\n  <span class="hl hl-green">for(let i = 0; i &lt; dataArray.length; i++) {\n    process(dataArray[i]);\n  }</span>\n}`,
+    alts:[{color:'red',label:'Alternative 1',correct:false},{color:'blue',label:'Alternative 2',correct:false},{color:'green',label:'Alternative 3',correct:true}]
+  },
+  { prompt:'Clean up the <strong>function body</strong> by removing all the old console logs before we launch.',
+    lang:'typescript',
+    codeAlt:`<span class="hl hl-orange"><span class="ck">function</span> <span class="cf">calculateAge</span></span>( <span class="hl hl-yellow">birthYear</span> ) {\n  <span class="hl hl-purple">console.log(<span class="cs">"Starting calculation"</span>);\n  let age = 2024 - birthYear;\n  console.log(<span class="cs">"Finished"</span>);\n  return age;</span>\n}`,
+    alts:[{color:'purple',label:'Alternative 1',correct:true},{color:'yellow',label:'Alternative 2',correct:false},{color:'orange',label:'Alternative 3',correct:false}]
+  },
+  { prompt:'There is a math bug causing exceptions. Please completely rewrite the <strong>function body</strong>.',
+    lang:'typescript',
+    codeAlt:`<span class="hl hl-green"><span class="ck">function</span> <span class="cf">convertToCelsius</span></span>( <span class="hl hl-blue">fahrenheit</span> ) {\n  <span class="hl hl-red">let celsius = (fahrenheit - 32) * 5/9;\n  return celsius;</span>\n}`,
+    alts:[{color:'green',label:'Alternative 1',correct:false},{color:'red',label:'Alternative 2',correct:true},{color:'blue',label:'Alternative 3',correct:false}]
+  },
+  // LOGIC
+  { prompt:'We have new security requirements. Please validate the <strong>logic</strong> inside this block.',
+    lang:'typescript',
+    codeAlt:`<span class="hl hl-red"><span class="ck">function</span> <span class="cf">loginUser</span></span>( <span class="hl hl-blue">password</span> ) {\n  <span class="hl hl-green">if (password === <span class="cs">"1234"</span>) {\n    accessGranted = true;\n  }</span>\n}`,
+    alts:[{color:'red',label:'Alternative 1',correct:false},{color:'green',label:'Alternative 2',correct:true},{color:'blue',label:'Alternative 3',correct:false}]
+  },
+  { prompt:'The application is failing on certain edge cases. We need to check the checking <strong>logic</strong> here.',
+    lang:'typescript',
+    codeAlt:`<span class="hl hl-yellow">checkAge</span>( <span class="hl hl-orange">age</span> ) {\n  <span class="hl hl-purple">if (age >= 18 && age &lt; 100) {\n    return <span class="cs">"Valid"</span>;\n  } else {\n    return <span class="cs">"Invalid"</span>;\n  }</span>\n}`,
+    codePatch4:`<span class="ck">function</span> <span class="cf hl hl-yellow">checkAge</span>( <span class="hl hl-orange">age</span> ) {\n  <span class="hl hl-purple">if (age >= 18 && age &lt; 100) {\n    return <span class="cs">"Valid"</span>;\n  } else {\n    return <span class="cs">"Invalid"</span>;\n  }</span>\n}`,
+    alts:[{color:'purple',label:'Alternative 1',correct:true},{color:'yellow',label:'Alternative 2',correct:false},{color:'orange',label:'Alternative 3',correct:false}]
+  },
+  { prompt:'We need to rewrite the validation <strong>logic</strong> to ensure the input isn\'t blank before moving forward.',
+    lang:'typescript',
+    codeAlt:`<span class="hl hl-green"><span class="ck">function</span> <span class="cf">submitForm</span></span>( <span class="hl hl-blue">inputData</span> ) {\n  <span class="hl hl-red">while (inputData === <span class="cs">""</span>) {\n    promptUserForInput();\n  }</span>\n  database.save(inputData);\n}`,
+    alts:[{color:'blue',label:'Alternative 1',correct:false},{color:'green',label:'Alternative 2',correct:false},{color:'red',label:'Alternative 3',correct:true}]
+  },
+  // RETURN TYPE
+  { prompt:'To ensure scalability, we need to explicitly define the <strong>return type</strong> for this function.',
+    lang:'typescript',
+    codeAlt:`<span class="hl hl-yellow"><span class="ck">function</span> <span class="cf">getStockPrice</span></span>( symbol ) <span class="hl hl-blue">: number</span> {\n  <span class="hl hl-green">let price = api.checkPrice(symbol);\n  return price;</span>\n}`,
+    alts:[{color:'blue',label:'Alternative 1',correct:true},{color:'yellow',label:'Alternative 2',correct:false},{color:'green',label:'Alternative 3',correct:false}]
+  },
+  { prompt:'The database expects a true or false value. Please declare a boolean <strong>return type</strong>.',
+    lang:'typescript',
+    codeAlt:`<span class="hl hl-red">checkUserStatus( userID )</span> <span class="hl hl-purple">: boolean</span> {\n  <span class="hl hl-orange">if (userID === 123) return true;</span>\n  return false;\n}`,
+    codePatch5:`<span class="ck">function</span> <span class="cf hl hl-red">checkUserStatus</span>( userID ) <span class="hl hl-purple">: boolean</span> {\n  <span class="hl hl-orange">if (userID === 123) return true;</span>\n  return false;\n}`,
+    alts:[{color:'red',label:'Alternative 1',correct:false},{color:'purple',label:'Alternative 2',correct:true},{color:'orange',label:'Alternative 3',correct:false}]
+  },
+  { prompt:'Define the <strong>return type</strong> properly so we don\'t encounter type exceptions later on.',
+    lang:'typescript',
+    codeAlt:`<span class="ck">function</span> <span class="cf">generateInvoice</span>( <span class="hl hl-blue">amount</span> ) <span class="hl hl-yellow">: string</span> {\n  <span class="hl hl-green">let invoiceText = "Your total is " + amount;\n  return invoiceText;</span>\n}`,
+    alts:[{color:'green',label:'Alternative 1',correct:false},{color:'blue',label:'Alternative 2',correct:false},{color:'yellow',label:'Alternative 3',correct:true}]
+  },
+];
+let s2Idx = 0;
+let s2Answered = false;
+
+function s2Load() {
+  s2Loaded = true;
+  // Tag each item with its concept group (3 parameter, 3 argument, 3 signature, 3 body, 3 logic, 3 return type)
+  const s2Concepts = ['parameter','parameter','parameter',
+                      'argument','argument','argument',
+                      'signature','signature','signature',
+                      'body','body','body',
+                      'logic','logic','logic',
+                      'returntype','returntype','returntype'];
+  s2Items.forEach((it,i) => it._concept = s2Concepts[i]);
+  shuffle(s2Items);
+  // prevent 3+ consecutive same-concept
+  for (let i=2; i<s2Items.length; i++) {
+    if (s2Items[i]._concept === s2Items[i-1]._concept && s2Items[i]._concept === s2Items[i-2]._concept) {
+      for (let j=i+1; j<s2Items.length; j++) {
+        if (s2Items[j]._concept !== s2Items[i]._concept) {
+          [s2Items[i], s2Items[j]] = [s2Items[j], s2Items[i]];
+          break;
+        }
+      }
+    }
+  }
+  // Shuffle the alts array within each item (preserving correct flags)
+  s2Items.forEach(it => shuffle(it.alts));
+  s2Render();
+}
+
+function s2Render() {
+  const item = s2Items[s2Idx];
+  document.getElementById('s2-prompt').innerHTML = item.prompt;
+  document.getElementById('s2-lang').innerHTML = item.lang;
+  const codeHTML = item.codePatch3 || item.codePatch4 || item.codePatch5 || item.codePatch2 || item.codePatch || item.codeAlt || item.code;
+  document.getElementById('s2-code').innerHTML = codeHTML;
+  document.getElementById('s2-counter').textContent = (s2Idx+1) + ' / ' + s2Items.length;
+  document.getElementById('s2-feedback').textContent = '';
+  document.getElementById('s2-feedback').className = 'def-feedback';
+  document.getElementById('s2-next').disabled = true;
+  s2Answered = false;
+
+  const altsDiv = document.getElementById('s2-alts');
+  altsDiv.innerHTML = '';
+  item.alts.forEach((alt, i) => {
+    const cm = COLOR_MAP[alt.color];
+    const btn = document.createElement('button');
+    btn.className = 'alt-btn';
+    btn.innerHTML = `<div class="alt-color-dot" style="background:${cm.dot};color:${cm.dot}"></div><span class="alt-btn-label">${alt.label}</span>`;
+    btn.onclick = () => s2Answer(i);
+    btn.dataset.correct = alt.correct;
+    altsDiv.appendChild(btn);
+  });
+}
+
+function s2Answer(i) {
+  if (s2Answered) return;
+  s2Answered = true;
+  const item = s2Items[s2Idx];
+  const btns = document.getElementById('s2-alts').querySelectorAll('.alt-btn');
+  const chosen = item.alts[i];
+  if (chosen.correct) {
+    playSound('correct');
+    btns[i].classList.add('correct');
+    document.getElementById('s2-feedback').textContent = '✓ Correct!';
+    document.getElementById('s2-feedback').className = 'def-feedback correct';
+    addScore(1);
+  } else {
+    playSound('wrong');
+    btns[i].classList.add('wrong');
+    item.alts.forEach((a,j) => { if (a.correct) btns[j].classList.add('correct'); });
+    document.getElementById('s2-feedback').textContent = '✗ Not quite — try to identify the highlighted element.';
+    document.getElementById('s2-feedback').className = 'def-feedback wrong';
+  }
+  btns.forEach(b => b.disabled = true);
+  document.getElementById('s2-next').disabled = false;
+}
+
+function s2Next() {
+  s2Idx++;
+  if (s2Idx >= s2Items.length) {
+    s2Idx = s2Items.length - 1;
+    document.getElementById('s2-next').textContent = 'Done ✓';
+    document.getElementById('s2-next').disabled = true;
+    return;
+  }
+  s2Render();
+}
+
+// ======================== SLIDE 3 ========================
+let s3Loaded = false;
+const s3Items = [
+  { before: `<span class="ck">function</span> <span class="cf">calculateTotal</span>( price ) {\n  <span class="ck">return</span> price + (price * 0.10);\n}`,
+    after:  `<span class="ck">function</span> <span class="cf">calculateTotal</span>( price, <span class="diff-add">tax</span> ) {\n  <span class="ck">return</span> price + (price * tax);\n}`,
+    correct:'Added a parameter', alts:['Added a parameter','Refactored the body','Passed an argument'] },
+  { before: `<span class="ck">function</span> <span class="cf">sendEmail</span>( address, subject, isUrgent ) {\n  mailer.send(address, subject);\n}`,
+    after:  `<span class="ck">function</span> <span class="cf">sendEmail</span>( address, subject ) {\n  mailer.send(address, subject);\n}`,
+    correct:'Removed a parameter', alts:['Removed a parameter','Declared a return type','Validated the logic'] },
+  { before: `<span class="cc">// Calling the function</span>\n<span class="cf">saveUserProfile</span>(  );`,
+    after:  `<span class="cc">// Calling the function</span>\n<span class="cf">saveUserProfile</span>( <span class="diff-add">"Daniel"</span> );`,
+    correct:'Passed an argument', alts:['Passed an argument','Modified the signature','Removed a parameter'] },
+  { before: `<span class="ck">function</span> <span class="cf">loadData</span>() {\n  <span class="ck">let</span> data = database.get();\n  <span class="ck">return</span> data;\n}`,
+    after:  `<span class="diff-add"><span class="ck">async function</span> <span class="cf">fetchUserRecord</span>( userID )</span> {\n  <span class="ck">let</span> data = database.get();\n  <span class="ck">return</span> data;\n}`,
+    correct:'Modified the signature', alts:['Modified the signature','Passed an argument','Validated the logic'] },
+  { before: `<span class="ck">function</span> <span class="cf">checkPass</span>(score) {\n  <span class="ck">if</span> (score >= <span class="cn">50</span>) {\n    <span class="ck">return</span> <span class="ck">true</span>;\n  } <span class="ck">else</span> {\n    <span class="ck">return</span> <span class="ck">false</span>;\n  }\n}`,
+    after:  `<span class="ck">function</span> <span class="cf">checkPass</span>(score) {\n  <span class="diff-add"><span class="ck">return</span> score >= <span class="cn">50</span>;</span>\n}`,
+    correct:'Refactored the body', alts:['Refactored the body','Added a parameter','Declared a return type'] },
+  { before: `<span class="ck">function</span> <span class="cf">checkUserStatus</span>( userID ) {\n  <span class="ck">return</span> <span class="ck">true</span>;\n}`,
+    after:  `<span class="ck">function</span> <span class="cf">checkUserStatus</span>( userID ) <span class="diff-add">: boolean</span> {\n  <span class="ck">return</span> <span class="ck">true</span>;\n}`,
+    correct:'Declared a return type', alts:['Declared a return type','Passed an argument','Removed a parameter'] },
+  { before: `<span class="ck">function</span> <span class="cf">login</span>( password ) {\n  <span class="cf">grantAccess</span>();\n}`,
+    after:  `<span class="ck">function</span> <span class="cf">login</span>( password ) {\n  <span class="diff-add"><span class="ck">if</span> (password !== <span class="cs">""</span>) {\n    <span class="cf">grantAccess</span>();\n  }</span>\n}`,
+    correct:'Validated the logic', alts:['Validated the logic','Modified the signature','Declared a return type'] },
+];
+let s3Idx = 0;
+let s3Played = false;
+let s3Answered = false;
+
+function s3Load() {
+  s3Loaded = true;
+  shuffle(s3Items);
+  // Also shuffle the alts array within each item
+  s3Items.forEach(it => it.alts = shuffle([...it.alts]));
+  s3Render();
+}
+
+function s3Render() {
+  const item = s3Items[s3Idx];
+  document.getElementById('s3-before').innerHTML = item.before;
+  document.getElementById('s3-after').innerHTML = '<span style="opacity:0.2;font-style:italic;font-size:12px">Press ▶ to reveal</span>';
+  document.getElementById('s3-arrow').classList.remove('visible');
+  document.getElementById('s3-play').disabled = false;
+  document.getElementById('s3-next').disabled = true;
+  document.getElementById('s3-feedback').textContent = '';
+  document.getElementById('s3-feedback').className = 'action-feedback';
+  document.getElementById('s3-counter').textContent = (s3Idx+1) + ' / ' + s3Items.length;
+  s3Played = false;
+  s3Answered = false;
+
+  const altsDiv = document.getElementById('s3-alts');
+  altsDiv.innerHTML = '';
+  item.alts.forEach(a => {
+    const btn = document.createElement('button');
+    btn.className = 'action-alt-btn';
+    btn.textContent = a;
+    btn.disabled = true;
+    btn.onclick = () => s3Answer(a, btn, item.correct);
+    altsDiv.appendChild(btn);
+  });
+}
+
+function s3Play() {
+  if (s3Played) return;
+  s3Played = true;
+  document.getElementById('s3-play').disabled = true;
+  const item = s3Items[s3Idx];
+  document.getElementById('s3-after').style.opacity = '0';
+  setTimeout(() => {
+    document.getElementById('s3-after').innerHTML = item.after;
+    document.getElementById('s3-after').style.opacity = '1';
+    document.getElementById('s3-arrow').classList.add('visible');
+  }, 300);
+  setTimeout(() => {
+    document.getElementById('s3-alts').querySelectorAll('.action-alt-btn').forEach(b => b.disabled = false);
+  }, 600);
+}
+
+function s3Answer(val, btn, correct) {
+  if (s3Answered) return;
+  s3Answered = true;
+  const allBtns = document.getElementById('s3-alts').querySelectorAll('.action-alt-btn');
+  if (val === correct) {
+    playSound('correct');
+    btn.classList.add('correct');
+    document.getElementById('s3-feedback').textContent = '✓ Correct!';
+    document.getElementById('s3-feedback').className = 'action-feedback correct';
+    addScore(1);
+  } else {
+    playSound('wrong');
+    btn.classList.add('wrong');
+    allBtns.forEach(b => { if (b.textContent === correct) b.classList.add('correct'); });
+    document.getElementById('s3-feedback').textContent = '✗ It was: ' + correct;
+    document.getElementById('s3-feedback').className = 'action-feedback wrong';
+  }
+  allBtns.forEach(b => b.disabled = true);
+  document.getElementById('s3-next').disabled = false;
+}
+
+function s3Next() {
+  s3Idx++;
+  if (s3Idx >= s3Items.length) {
+    s3Idx = s3Items.length - 1;
+    document.getElementById('s3-next').textContent = 'Done ✓';
+    document.getElementById('s3-next').disabled = true;
+    return;
+  }
+  s3Render();
+}
+
+// ======================== SLIDE 4 ========================
+let s4Loaded = false;
+const s4Words = [
+  { en:'Parameter', pt:'Parâmetro',
+    mcqOpts:['Parâmetro','Assinatura','Variável'], mcqCorrect:'Parâmetro',
+    gap:'We need to add a new ________ to the function to accept the user\'s email.', gapAnswer:'parameter' },
+  { en:'Argument', pt:'Argumento',
+    mcqOpts:['Argumento','Lógica','Tipo de retorno'], mcqCorrect:'Argumento',
+    gap:'When you call the function, make sure to pass the correct ________.', gapAnswer:'argument' },
+  { en:'Signature', pt:'Assinatura',
+    mcqOpts:['Assinatura','Argumento','Corpo da função'], mcqCorrect:'Assinatura',
+    gap:'The compiler gave an error because the function ________ doesn\'t match the new API.', gapAnswer:'signature' },
+  { en:'Function Body', pt:'Corpo da função',
+    mcqOpts:['Corpo da função','Parâmetro','Lógica'], mcqCorrect:'Corpo da função',
+    gap:'All the calculation steps and loops are written inside the ________.', gapAnswer:'function body' },
+  { en:'Return Type', pt:'Tipo de retorno',
+    mcqOpts:['Tipo de retorno','Assinatura','Argumento'], mcqCorrect:'Tipo de retorno',
+    gap:'If the function outputs text, the ________ must be declared as a string.', gapAnswer:'return type' },
+  { en:'Logic', pt:'Lógica',
+    mcqOpts:['Lógica','Corpo da função','Parâmetro'], mcqCorrect:'Lógica',
+    gap:'The validation ________ is failing, so it\'s letting bad passwords through.', gapAnswer:'logic' },
+  { en:'Add', pt:'Adicionar',
+    mcqOpts:['Adicionar','Remover','Validar'], mcqCorrect:'Adicionar',
+    gap:'Please ________ a new parameter to handle these edge cases.', gapAnswer:'add' },
+  { en:'Remove', pt:'Remover',
+    mcqOpts:['Remover','Refatorar','Passar'], mcqCorrect:'Remover',
+    gap:'We don\'t use this variable anymore, so you can ________ it from the code.', gapAnswer:'remove' },
+  { en:'Pass', pt:'Passar',
+    mcqOpts:['Passar','Modificar','Declarar'], mcqCorrect:'Passar',
+    gap:'When calling the API, you need to ________ the user\'s ID as the first argument.', gapAnswer:'pass' },
+  { en:'Modify', pt:'Modificar',
+    mcqOpts:['Modificar','Adicionar','Validar'], mcqCorrect:'Modificar',
+    gap:'We must ________ the signature to fix the current exceptions we are seeing.', gapAnswer:'modify' },
+  { en:'Refactor', pt:'Refatorar',
+    mcqOpts:['Refatorar','Remover','Declarar'], mcqCorrect:'Refatorar',
+    gap:'The code is slow, so we need to ________ the function body for better speed.', gapAnswer:'refactor' },
+  { en:'Declare', pt:'Declarar',
+    mcqOpts:['Declarar','Passar','Modificar'], mcqCorrect:'Declarar',
+    gap:'Don\'t forget to ________ the return type so the database knows what data to expect.', gapAnswer:'declare' },
+  { en:'Validate', pt:'Validar',
+    mcqOpts:['Validar','Refatorar','Adicionar'], mcqCorrect:'Validar',
+    gap:'We need to ________ the logic to ensure the system meets the new security requirements.', gapAnswer:'validate' },
+];
+
+// State: each word has a 'level' (1-4, 4=done)
+let s4State = s4Words.map((w,i) => ({ idx:i, level:1, queue:true }));
+let s4Queue = [];
+let s4Current = null;
+let s4GapRevealed = false;
+
+function s4RenderGrid() {
+  const g = document.getElementById('s4-grid');
+  g.innerHTML = '';
+  s4State.forEach((st,i) => {
+    const w = s4Words[i];
+    const chip = document.createElement('div');
+    chip.className = 'word-chip ' + (st.level > 4 ? 'done' : 't'+st.level);
+    chip.textContent = w.en;
+    chip.id = 'chip-'+i;
+    g.appendChild(chip);
+  });
+}
+
+function s4Load() {
+  s4Loaded = true;
+  s4RebuildQueue();
+  s4RenderGrid();
+  s4Next();
+}
+
+// Build an interleaved queue: one card per level that has members, round-robin,
+// so the student sees a mix of types rather than all-type-1 then all-type-2.
+function s4RebuildQueue() {
+  // Group active words by level
+  const byLevel = {1:[],2:[],3:[],4:[]};
+  s4State.forEach(st => {
+    if (st.level >= 1 && st.level <= 4) byLevel[st.level].push(st.idx);
+  });
+  [1,2,3,4].forEach(l => shuffle(byLevel[l]));
+
+  s4Queue = [];
+  // Interleave round-robin across levels that have members
+  // Build pools array once; drain them round-robin
+  const levels = [1,2,3,4].filter(l => byLevel[l].length > 0);
+  let round = 0;
+  while (true) {
+    let added = false;
+    for (const l of levels) {
+      if (byLevel[l].length > 0) {
+        s4Queue.push(byLevel[l].shift());
+        added = true;
+      }
+    }
+    if (!added) break;
+  }
+}
+
+function s4Next() {
+  if (s4Queue.length === 0) {
+    if (s4State.every(s => s.level > 4)) {
+      document.getElementById('review-main').style.display = 'none';
+      document.getElementById('complete-screen').classList.add('visible');
+      return;
+    }
+    // Rebuild interleaved queue from remaining words
+    s4RebuildQueue();
+    if (s4Queue.length === 0) {
+      document.getElementById('review-main').style.display = 'none';
+      document.getElementById('complete-screen').classList.add('visible');
+      return;
+    }
+  }
+  const idx = s4Queue.shift();
+  s4Current = idx;
+  s4GapRevealed = false;
+  const word = s4Words[idx];
+  const level = s4State[idx].level;
+  s4RenderCard(word, level);
+}
+
+function s4RenderCard(word, level) {
+  const badgeEl = document.getElementById('s4-type-badge');
+  badgeEl.className = 'type-badge t'+level;
+  const typeLabels = {1:'Type 1 — Multiple Choice',2:'Type 2 — English → Portuguese',3:'Type 3 — Portuguese → English',4:'Type 4 — Gap Fill'};
+  badgeEl.textContent = typeLabels[level];
+
+  const card = document.getElementById('s4-card');
+  card.classList.remove('flipped');
+
+  const mcqDiv = document.getElementById('s4-mcq');
+  const gapDiv = document.getElementById('s4-gap');
+  const actDiv = document.getElementById('s4-actions');
+  const statEl = document.getElementById('s4-status');
+
+  mcqDiv.style.display = 'none';
+  gapDiv.style.display = 'none';
+  card.style.display = '';
+  actDiv.innerHTML = '';
+  statEl.textContent = '';
+
+  const remaining = s4State.filter(s => s.level <= 4).length;
+  statEl.textContent = remaining + ' word' + (remaining!==1?'s':'') + ' remaining';
+
+  if (level === 1) {
+    document.getElementById('s4-front').textContent = word.en;
+    document.getElementById('s4-front-sub').textContent = 'Select the Portuguese translation';
+    document.getElementById('s4-back').textContent = word.pt;
+    document.getElementById('s4-back-sub').textContent = 'translation';
+    mcqDiv.style.display = 'grid';
+    mcqDiv.innerHTML = '';
+    const shuffled = [...word.mcqOpts].sort(()=>Math.random()-0.5);
+    shuffled.forEach(opt => {
+      const b = document.createElement('button');
+      b.className = 'fc-mcq-btn';
+      b.textContent = opt;
+      b.onclick = () => {
+        if (b.disabled) return;
+        mcqDiv.querySelectorAll('.fc-mcq-btn').forEach(x=>x.disabled=true);
+        if (opt === word.mcqCorrect) {
+          playSound('correct');
+          b.classList.add('correct');
+          s4Advance(true);
+          setTimeout(()=>s4Next(), 800);
+        } else {
+          playSound('wrong');
+          b.classList.add('wrong');
+          mcqDiv.querySelectorAll('.fc-mcq-btn').forEach(x=>{ if(x.textContent===word.mcqCorrect) x.classList.add('correct'); });
+          s4Advance(false);
+          setTimeout(()=>s4Next(), 1200);
+        }
+      };
+      mcqDiv.appendChild(b);
+    });
+
+  } else if (level === 2) {
+    document.getElementById('s4-front').textContent = word.en;
+    document.getElementById('s4-front-sub').textContent = 'Say the translation aloud, then flip';
+    document.getElementById('s4-back').textContent = word.pt;
+    document.getElementById('s4-back-sub').textContent = 'Portuguese translation';
+    const flipBtn = document.createElement('button');
+    flipBtn.className = 'review-btn primary';
+    flipBtn.textContent = 'Flip card';
+    flipBtn.onclick = () => {
+      card.classList.add('flipped');
+      flipBtn.remove();
+      const correct = document.createElement('button');
+      correct.className = 'review-btn correct-btn';
+      correct.textContent = '✓ Got it';
+      const wrong = document.createElement('button');
+      wrong.className = 'review-btn wrong-btn';
+      wrong.textContent = '✗ Not yet';
+      correct.onclick = () => { playSound('correct'); s4Advance(true); setTimeout(()=>s4Next(),400); };
+      wrong.onclick = () => { playSound('wrong'); s4Advance(false); setTimeout(()=>s4Next(),400); };
+      actDiv.appendChild(correct);
+      actDiv.appendChild(wrong);
+    };
+    actDiv.appendChild(flipBtn);
+
+  } else if (level === 3) {
+    document.getElementById('s4-front').textContent = word.pt;
+    document.getElementById('s4-front-sub').textContent = 'Say the English term aloud, then flip';
+    document.getElementById('s4-back').textContent = word.en;
+    document.getElementById('s4-back-sub').textContent = 'English term';
+    const flipBtn = document.createElement('button');
+    flipBtn.className = 'review-btn primary';
+    flipBtn.textContent = 'Flip card';
+    flipBtn.onclick = () => {
+      card.classList.add('flipped');
+      flipBtn.remove();
+      const correct = document.createElement('button');
+      correct.className = 'review-btn correct-btn';
+      correct.textContent = '✓ Got it';
+      const wrong = document.createElement('button');
+      wrong.className = 'review-btn wrong-btn';
+      wrong.textContent = '✗ Not yet';
+      correct.onclick = () => { playSound('correct'); s4Advance(true); setTimeout(()=>s4Next(),400); };
+      wrong.onclick = () => { playSound('wrong'); s4Advance(false); setTimeout(()=>s4Next(),400); };
+      actDiv.appendChild(correct);
+      actDiv.appendChild(wrong);
+    };
+    actDiv.appendChild(flipBtn);
+
+  } else if (level === 4) {
+    card.style.display = 'none';
+    gapDiv.style.display = 'block';
+    const parts = word.gap.split('________');
+    gapDiv.innerHTML = parts[0] + '<span class="gap-blank" id="gap-blank-el">&nbsp;</span>' + (parts[1]||'');
+    const revealBtn = document.createElement('button');
+    revealBtn.className = 'review-btn primary';
+    revealBtn.textContent = 'Reveal answer';
+    revealBtn.onclick = () => {
+      document.getElementById('gap-blank-el').textContent = word.gapAnswer;
+      document.getElementById('gap-blank-el').classList.add('revealed');
+      revealBtn.remove();
+      const correct = document.createElement('button');
+      correct.className = 'review-btn correct-btn';
+      correct.textContent = '✓ Got it';
+      const wrong = document.createElement('button');
+      wrong.className = 'review-btn wrong-btn';
+      wrong.textContent = '✗ Not yet';
+      correct.onclick = () => { playSound('correct'); s4Advance(true); setTimeout(()=>s4Next(),400); };
+      wrong.onclick = () => { playSound('wrong'); s4Advance(false); setTimeout(()=>s4Next(),400); };
+      actDiv.appendChild(correct);
+      actDiv.appendChild(wrong);
+    };
+    actDiv.appendChild(revealBtn);
+  }
+}
+
+function s4Advance(correct) {
+  const idx = s4Current;
+  const st = s4State[idx];
+  if (correct) {
+    st.level++;
+    addScore(1);
+    // Don't push into current queue — next rebuild will pick up new level
+  } else {
+    // Wrong: goes to end of current queue at same level
+    s4Queue.push(idx);
+  }
+  s4RenderGrid();
+}
+</script>
+</body>
+</html>

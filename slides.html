@@ -1,0 +1,1706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Function Vocabulary · Teaching Slides</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400;1,700&family=JetBrains+Mono:wght@400;500;700&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d0f0f;
+  --bg2: #111414;
+  --bg3: #161a1a;
+  --surface: #1a1f1f;
+  --surface2: #202626;
+  --border: #2a3232;
+  --border2: #333d3d;
+  --text: #e8edeb;
+  --text2: #9fb0ac;
+  --text3: #6a807c;
+  --neon: #00ffc8;
+  --neon2: #00e0b0;
+  --neon-dim: rgba(0,255,200,0.12);
+  --neon-glow: 0 0 20px rgba(0,255,200,0.3), 0 0 40px rgba(0,255,200,0.1);
+  --red: #ff4d6d;
+  --blue: #4ecdc4;
+  --yellow: #ffd166;
+  --purple: #c77dff;
+  --orange: #ff9a3c;
+  --green: #06d6a0;
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-body: 'Geist', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 100vw; height: 100vh; overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  cursor: default;
+}
+
+/* SLIDE SYSTEM */
+.slide {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 0;
+}
+.slide.active { display: flex; }
+
+/* PROGRESS & NAV */
+#progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  background: var(--neon);
+  box-shadow: var(--neon-glow);
+  z-index: 1000;
+}
+
+#slide-nav {
+  position: fixed;
+  bottom: 24px; left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 100;
+}
+.dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--border2);
+  transition: all 0.3s ease;
+}
+.dot.active {
+  background: var(--neon);
+  box-shadow: 0 0 12px var(--neon);
+}
+
+/* KEYBOARD HINTS */
+#keyboard-hint {
+  position: fixed;
+  top: 20px; right: 24px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text3);
+  z-index: 50;
+}
+#keyboard-hint span {
+  display: inline-block;
+  margin: 0 4px;
+  padding: 2px 6px;
+  border: 1px solid var(--border2);
+  border-radius: 2px;
+}
+
+/* SLIDE HEADER */
+.slide-header {
+  flex-shrink: 0;
+  padding: 40px 48px 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+}
+
+.slide-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--neon);
+  opacity: 0.7;
+}
+
+.slide-title {
+  font-family: var(--font-display);
+  font-size: 42px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--text);
+}
+.slide-title em {
+  font-style: italic;
+  color: var(--neon);
+}
+
+/* SLIDE CONTENT */
+.slide-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow-y: auto;
+}
+
+.content-section {
+  padding: 28px 48px;
+  border-bottom: 1px solid var(--border);
+}
+.content-section:last-child {
+  border-bottom: none;
+}
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--neon);
+  opacity: 0.7;
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+
+.section-body {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--text2);
+  margin-bottom: 20px;
+}
+
+.section-body strong {
+  color: var(--neon);
+  font-weight: 600;
+}
+
+.section-body em {
+  color: var(--text);
+  font-style: italic;
+}
+
+/* CODE BLOCKS */
+.code-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 16px 0;
+}
+
+.code-header {
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  padding: 8px 16px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text3);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.code-header::before {
+  content: '';
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--neon);
+}
+
+.code-inner {
+  padding: 20px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.7;
+  color: #a8c5c1;
+  white-space: pre;
+  overflow-x: auto;
+}
+
+.kw { color: #c792ea; }
+.fn { color: #82aaff; }
+.str { color: #c3e88d; }
+.num { color: var(--yellow); }
+.comment { color: var(--text3); font-style: italic; }
+.highlight { color: var(--neon); font-weight: 700; }
+.under { text-decoration: underline; text-underline-offset: 3px; color: var(--neon); }
+
+/* SIDE-BY-SIDE */
+.side-by-side {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 16px 0;
+}
+
+.side-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.side-panel-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--neon);
+  opacity: 0.7;
+}
+
+.side-panel-content {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+/* ANALOGY BOX */
+.analogy-box {
+  background: rgba(0, 255, 200, 0.06);
+  border-left: 3px solid var(--neon);
+  border-radius: 0 4px 4px 0;
+  padding: 20px;
+  margin: 16px 0;
+}
+
+.analogy-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--neon);
+  margin-bottom: 10px;
+  opacity: 0.8;
+}
+
+.analogy-body {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--text2);
+}
+
+.analogy-body strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* KEY POINT BOX */
+.key-point {
+  background: rgba(255, 209, 102, 0.08);
+  border-left: 3px solid var(--yellow);
+  border-radius: 0 4px 4px 0;
+  padding: 16px 20px;
+  margin: 16px 0;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--yellow);
+  line-height: 1.6;
+}
+
+/* COMPARISON TABLE */
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 14px;
+}
+
+.comparison-table th {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--neon);
+  font-family: var(--font-mono);
+}
+
+.comparison-table td {
+  border: 1px solid var(--border);
+  padding: 12px;
+  color: var(--text2);
+}
+
+.comparison-table tr:nth-child(even) {
+  background: var(--surface);
+}
+
+/* EXAMPLE BOX */
+.example-box {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  padding: 16px;
+  margin: 16px 0;
+}
+
+.example-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 8px;
+}
+
+.example-content {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+/* BOTTOM NAV */
+.slide-nav {
+  flex-shrink: 0;
+  padding: 20px 48px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-counter {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text3);
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.nav-btn {
+  background: transparent;
+  border: 1px solid var(--border2);
+  color: var(--text2);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  padding: 8px 16px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav-btn:hover {
+  border-color: var(--neon);
+  color: var(--neon);
+  background: var(--neon-dim);
+}
+
+.nav-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.nav-btn.primary {
+  border-color: var(--neon);
+  color: var(--neon);
+  background: var(--neon-dim);
+}
+
+/* ANIMATIONS */
+.slide.active .slide-header {
+  animation: slideDown 0.4s ease both;
+}
+
+.slide.active .slide-content {
+  animation: fadeUp 0.4s ease both;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .side-by-side {
+    grid-template-columns: 1fr;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+<div id="keyboard-hint">
+  <span>←</span> <span>→</span> to navigate
+</div>
+<div id="slide-nav">
+  <!-- dots will be generated -->
+</div>
+
+<!-- ===================== SLIDE 1: OVERVIEW ===================== -->
+<div class="slide active" id="slide-0">
+  <div class="slide-header">
+    <span class="slide-label">00 —</span>
+    <h1 class="slide-title"><em>Function</em> Vocabulary</h1>
+  </div>
+  <div class="slide-content">
+    <div class="content-section">
+      <div class="section-title">What You'll Learn</div>
+      <div class="section-body">
+        In the next slides, you'll master <strong>6 core concepts</strong> that every developer uses every single day:
+      </div>
+    </div>
+
+    <div class="content-section">
+      <div class="example-box">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          <div>
+            <strong style="color: var(--neon);">① Parameters & Arguments</strong><br>
+            The difference between a <em>placeholder</em> and the <em>real value</em>
+          </div>
+          <div>
+            <strong style="color: var(--neon);">② Function Signature</strong><br>
+            The <em>contract</em> between your function and the rest of the code
+          </div>
+          <div>
+            <strong style="color: var(--neon);">③ Function Body</strong><br>
+            The <em>actual work</em> that happens inside the curly brackets
+          </div>
+          <div>
+            <strong style="color: var(--neon);">④ Logic</strong><br>
+            The <em>decision-making</em> and reasoning your code uses
+          </div>
+          <div>
+            <strong style="color: var(--neon);">⑤ Return Type</strong><br>
+            The <em>promise</em> of what your function will give back
+          </div>
+          <div>
+            <strong style="color: var(--neon);">⑥ Action Verbs</strong><br>
+            The <em>6 ways</em> to modify code (add, remove, pass, modify, refactor, validate)
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section">
+      <div class="section-title">How This Works</div>
+      <div class="section-body">
+        Each concept gets <strong>one slide of explanation</strong> with analogies and examples. Then you practice with interactive exercises. Ready? Let's start.
+      </div>
+    </div>
+  </div>
+  <div class="slide-nav">
+    <span class="nav-counter">0 / 15</span>
+    <div class="nav-buttons">
+      <button class="nav-btn" onclick="prevSlide()" disabled>← Back</button>
+      <button class="nav-btn primary" onclick="nextSlide()">Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== SLIDE 2: PARAMETERS & ARGUMENTS ===================== -->
+<div class="slide" id="slide-1">
+  <div class="slide-header">
+    <span class="slide-label">01 —</span>
+    <h1 class="slide-title"><em>Parameters</em> vs <em>Arguments</em></h1>
+  </div>
+  <div class="slide-content">
+    <div class="content-section">
+      <div class="section-title">The Core Difference</div>
+      <div class="analogy-box">
+        <div class="analogy-label">🍰 Analogy: Baking a Cake</div>
+        <div class="analogy-body">
+          When you <strong>write a recipe</strong>, you write:
+          <br><br>
+          "Add <em>[X]</em> cups of flour, <em>[Y]</em> eggs, and <em>[Z]</em> teaspoons of sugar."
+          <br><br>
+          The X, Y, Z are <strong>parameters</strong> — they're <em>placeholders</em>. The recipe doesn't know yet if it's 2 cups or 5 cups.
+          <br><br>
+          When you <strong>actually bake</strong>, you decide:
+          <br><br>
+          "Add <strong>2</strong> cups of flour, <strong>3</strong> eggs, and <strong>1</strong> teaspoon of sugar."
+          <br><br>
+          Now 2, 3, 1 are <strong>arguments</strong> — they're the <em>real values</em> you plug into the recipe.
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section">
+      <div class="section-title">In Code</div>
+      <div class="side-by-side">
+        <div>
+          <div class="side-panel-label">DEFINING (Writing the recipe)</div>
+          <div class="code-block">
+            <div class="code-header">javascript</div>
+            <pre class="code-inner"><span class="kw">function</span> <span class="fn">greetUser</span>( <span class="under">firstName</span> ) {
+  <span class="comment">// firstName is a PARAMETER</span>
+  <span class="comment">// It's a placeholder — we don't know yet who we're greeting</span>
+  <span class="kw">return</span> <span class="str">"Hello, "</span> + firstName;
+}</pre>
+          </div>
+        </div>
+        <div>
+          <div class="side-panel-label">CALLING (Cooking with real numbers)</div>
+          <div class="code-block">
+            <div class="code-header">javascript</div>
+            <pre class="code-inner"><span class="comment">// Calling the function</span>
+<span class="fn">greetUser</span>( <span class="under"><span class="str">"Alice"</span></span> );
+<span class="comment">// "Alice" is an ARGUMENT</span>
+<span class="comment">// Now we're being specific!</span>
+
+<span class="comment">// Result:</span>
+<span class="comment">// "Hello, Alice"</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>When?</th>
+            <th>What are they?</th>
+            <th>Nature</th>
+            <th>Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>DEFINE</strong></td>
+            <td>Parameters</td>
+            <td>Placeholders</td>
+            <td><code>firstName</code> in <code>function(firstName)</code></td>
+          </tr>
+          <tr>
+            <td><strong>CALL</strong></td>
+            <td>Arguments</td>
+            <td>Real values</td>
+            <td><code>"Alice"</code> in <code>greetUser("Alice")</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="content-section">
+      <div class="key-point">
+        💡 KEY: A parameter is <strong>the name</strong>. An argument is <strong>the value</strong>. Parameters go in the definition. Arguments go in the call.
+      </div>
+    </div>
+
+    <div class="content-section">
+      <div class="section-title">Three Real Examples</div>
+
+      <div class="example-box">
+        <div class="example-label">Example 1: User Login</div>
+        <div class="example-content">
+          <div class="code-block">
+            <div class="code-header">javascript</div>
+            <pre class="code-inner"><span class="kw">function</span> <span class="fn">login</span>( <span class="highlight">email</span>, <span class="highlight">password</span> ) {
+  <span class="comment">// email, password = PARAMETERS</span>
+  <span class="kw">return</span> database.checkUser(email, password);
+}
+
+<span class="comment">// When we call it:</span>
+<span class="fn">login</span>( <span class="highlight"><span class="str">"alex@mail.com"</span></span>, <span class="highlight"><span class="str">"secret123"</span></span> );
+<span class="comment">// "alex@mail.com", "secret123" = ARGUMENTS</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="example-box">
+        <div class="example-label">Example 2: Calculate Discount</div>
+        <div class="example-content">
+          <div class="code-block">
+            <div class="code-header">python</div>
+            <pre class="code-inner"><span class="kw">def</span> <span class="fn">apply_discount</span>( <span class="highlight">price</span>, <span class="highlight">percent</span> ):
+  <span class="comment"># price, percent = PARAMETERS</span>
+  <span class="kw">return</span> price * (<span class="num">1</span> - percent)
+
+<span class="comment"># When we call it:</span>
+<span class="fn">apply_discount</span>( <span class="highlight"><span class="num">100</span></span>, <span class="highlight"><span class="num">0.20</span></span> )
+<span class="comment"># 100, 0.20 = ARGUMENTS</span>
+<span class="comment"># Result: 80 (20% off)</span></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-nav">
+    <span class="nav-counter">1 / 15</span>
+    <div class="nav-buttons">
+      <button class="nav-btn" onclick="prevSlide()">← Back</button>
+      <button class="nav-btn primary" onclick="nextSlide()">Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== SLIDE 3: FUNCTION SIGNATURE ===================== -->
+<div class="slide" id="slide-2">
+  <div class="slide-header">
+    <span class="slide-label">02 —</span>
+    <h1 class="slide-title"><em>Function</em> Signature</h1>
+  </div>
+  <div class="slide-content">
+    <div class="content-section">
+      <div class="section-title">What Is a Signature?</div>
+      <div class="analogy-box">
+        <div class="analogy-label">🆔 Analogy: Bank Account ID Card</div>
+        <div class="analogy-body">
+          When you open a bank account, the bank issues an ID card showing:
+          <br><br>
+          • Your name (who you are)<br>
+          • Your account number (unique ID)<br>
+          • Authorized activities (what you can do)<br><br>
+          
+          A <strong>function signature</strong> is similar. It shows:
+          <br><br>
+          • The function name (who it is)<br>
+          • What parameters it expects (what inputs it needs)<br>
+          • What it will return (what it outputs)
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section">
+      <div class="section-title">Breaking Down a Signature</div>
+      <div class="code-block">
+        <div class="code-header">javascript</div>
+        <pre class="code-inner"><span class="highlight"><span class="kw">function</span> <span class="fn">calculateTax</span>( salary, taxRate ) {</span>
+<span class="comment">   └─ This entire line is the SIGNATURE</span>
+</pre>
+      </div>
+
+      <div class="side-by-side">
+        <div class="side-panel">
+          <div class="side-panel-label">The function name</div>
+          <div class="side-panel-content">
+            <code style="color: var(--neon);">calculateTax</code>
+            <br><br>
+            This is how you <em>call</em> the function. When you need to do something, you say "calculateTax".
+          </div>
+        </div>
+        <div class="side-panel">
+          <div class="side-panel-label">The parameters</div>
+          <div class="side-panel-content">
+            <code style="color: var(--neon);">( salary, taxRate )</code>
+            <br><br>
+            These are the <em>inputs</em> the function expects. Someone must provide these values when calling it.
+          </div>
+        </div>
+      </div>
+
+      <div class="key-point">
+        💡 KEY: The signature is a <strong>contract</strong>. It tells the rest of the code: "Call me calculateTax and give me two things: a salary and a taxRate."
+      </div>
+    </div>
+
+    <div class="content-section">
+      <div class="section-title">Why Signatures Matter</div>
+      <div class="section-body">
+        If you <strong>change the signature</strong>, all code that calls the function will <strong>break</strong>:
+      </div>
+
+      <div class="example-box">
+        <div class="example-label">❌ The Problem</div>
+        <div class="example-content">
+          <div class="code-block">
+            <div class="code-header">javascript</div>
+            <pre class="code-inner"><span class="comment">// OLD signature:</span>
+<span class="kw">function</span> <span class="fn">getUser</span>( <span class="highlight">userId</span> ) { ... }
+
+<span class="comment">// Lots of code uses it this way:</span>
+<span class="fn">getUser</span>(<span class="num">42</span>);
+<span class="fn">getUser</span>(<span class="num">108</span>);
+<span class="fn">getUser</span>(<span class="num">200</span>);
+
+<span class="comment">// Now someone changes the signature:</span>
+<span class="kw">function</span> <span class="fn">getUser</span>( <span class="highlight">userId, includeProfile</span> ) { ... }
+<span class="comment">                      ↑ NEW parameter added!</span>
+
+<span class="comment">// ❌ Now all the old getUser(42) calls BREAK!</span>
+<span class="comment">// The function expects 2 arguments but only got 1</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="key-point">
+        ⚠️ REMEMBER: The signature is a <strong>promise</strong>. If you change it in a team, you must update <strong>every place</strong> that calls it. Otherwise, the app breaks.
+      </div>
+    </div>
+  </div>
+  <div class="slide-nav">
+    <span class="nav-counter">2 / 15</span>
+    <div class="nav-buttons">
+      <button class="nav-btn" onclick="prevSlide()">← Back</button>
+      <button class="nav-btn primary" onclick="nextSlide()">Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== SLIDE 4: FUNCTION BODY ===================== -->
+<div class="slide" id="slide-3">
+  <div class="slide-header">
+    <span class="slide-label">03 —</span>
+    <h1 class="slide-title"><em>Function</em> Body</h1>
+  </div>
+  <div class="slide-content">
+    <div class="content-section">
+      <div class="section-title">What Happens Inside?</div>
+      <div class="analogy-box">
+        <div class="analogy-label">📋 Analogy: Recipe Steps</div>
+        <div class="analogy-body">
+          A recipe card has two parts:
+          <br><br>
+          <strong>Ingredients list:</strong> "flour, eggs, sugar"
+          <br><em>This is like the signature</em>
+          <br><br>
+          <strong>Steps to follow:</strong> "Mix flour and sugar. Add eggs one-by-one. Bake for 30 min."
+          <br><em>This is like the body</em>
+          <br><br>
+          The <strong>body</strong> is where the <em>actual work</em> happens. It's all the code inside the curly brackets { }.
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section">
+      <div class="section-title">The Body Contains</div>
+
+      <div class="side-by-side">
+        <div class="side-panel">
+          <strong style="color: var(--neon);">Decision Logic</strong><br><br>
+          if/else statements that check conditions
+          <div class="code-block" style="margin-top: 12px;">
+            <pre class="code-inner"><span class="kw">if</span> (age >= <span class="num">18</span>) {
+  <span class="fn">allowAccess</span>();
+}</pre>
+          </div>
+        </div>
+        <div class="side-panel">
+          <strong style="color: var(--neon);">Calculations</strong><br><br>
+          Math operations on the parameters
+          <div class="code-block" style="margin-top: 12px;">
+            <pre class="code-inner"><span class="kw">let</span> total = price * <span class="num">1.1</span>;
+<span class="kw">return</span> total;</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="side-by-side">
+        <div class="side-panel">
+          <strong style="color: var(--neon);">Loops</strong><br><br>
+          Repeat actions multiple times
+          <div class="code-block" style="margin-top: 12px;">
+            <pre class="code-inner"><span class="kw">for</span> (<span class="kw">let</span> i=<span class="num">0</span>; i&lt;<span class="num">5</span>; i++) {
+  <span class="fn">doSomething</span>();
+}</pre>
+          </div>
+        </div>
+        <div class="side-panel">
+          <strong style="color: var(--neon);">Return Statement</strong><br><br>
+          Send a result back to the caller
+          <div class="code-block" style="margin-top: 12px;">
+            <pre class="code-inner"><span class="kw">return</span> result;
+<span class="comment">// Function stops here</span></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section">
+      <div class="section-title">Complete Example</div>
+      <div class="example-box">
+        <div class="example-label">Example: Validate Email</div>
+        <div class="example-content">
+          <div class="code-block">
+            <div class="code-header">javascript</div>
+            <pre class="code-inner"><span class="kw">function</span> <span class="fn">validateEmail</span>( <span class="highlight">email</span> ) {
+  <span class="comment">// ═══════ FUNCTION BODY STARTS ═══════</span>
+
+  <span class="comment">// LOGIC: Check if email is empty</span>
+  <span class="kw">if</span> (!email || email === <span class="str">""</span>) {
+    <span class="kw">return</span> <span class="kw">false</span>;  <span class="comment">// Invalid!</span>
+  }
+
+  <span class="comment">// LOGIC: Check if email has @ symbol</span>
+  <span class="kw">if</span> (!email.includes(<span class="str">"@"</span>)) {
+    <span class="kw">return</span> <span class="kw">false</span>;  <span class="comment">// Invalid!</span>
+  }
+
+  <span class="comment">// If we got here, it's valid</span>
+  <span class="kw">return</span> <span class="kw">true</span>;
+
+  <span class="comment">// ═══════ FUNCTION BODY ENDS ═══════</span>
+}</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="key-point">
+        💡 KEY: The body is <strong>everything between the curly brackets { }</strong>. It's the actual work. No body = no work. No return statement = no result sent back.
+      </div>
+    </div>
+  </div>
+  <div class="slide-nav">
+    <span class="nav-counter">3 / 15</span>
+    <div class="nav-buttons">
+      <button class="nav-btn" onclick="prevSlide()">← Back</button>
+      <button class="nav-btn primary" onclick="nextSlide()">Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== SLIDE 5: LOGIC ===================== -->
+<div class="slide" id="slide-4">
+  <div class="slide-header">
+    <span class="slide-label">04 —</span>
+    <h1 class="slide-title"><em>Logic</em></h1>
+  </div>
+  <div class="slide-content">
+    <div class="content-section">
+      <div class="section-title">What Is Logic?</div>
+      <div class="analogy-box">
+        <div class="analogy-label">🧠 Analogy: Making Decisions</div>
+        <div class="analogy-body">
+          Every day you make decisions:
+          <br><br>
+          "Should I go outside?"
+          <br><br>
+          You check: <strong>If</strong> weather is sunny <strong>AND</strong> temperature > 18°C,
+          <br><strong>THEN</strong> go outside. <strong>ELSE</strong> stay inside.
+          <br><br>
+          That checking + deciding = <strong>LOGIC</strong>.
+          <br><br>
+          In code, <strong>logic</strong> is the same thing: <em>Check conditions, make decisions.</em>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section">
+      <div class="section-title">Three Types of Logic</div>
+
+      <div class="example-box">
+        <div class="example-label">Type 1: Conditional (if/else)</div>
+        <div class="example-content">
+          <div class="code-block">
+            <div class="code-header">javascript</div>
+            <pre class="code-inner"><span class="kw">if</span> (score >= <span class="num">50</span>) {
+  studentPasses = <span class="kw">true</span>;
+} <span class="kw">else</span> {
+  studentPasses = <span class="kw">false</span>;
+}</pre>
+          </div>
+          <div class="section-body" style="margin-top: 12px;">
+            Check a condition. If true, do one thing. If false, do another.
+          </div>
+        </div>
+      </div>
+
+      <div class="example-box">
+        <div class="example-label">Type 2: Validation (checking requirements)</div>
+        <div class="example-content">
+          <div class="code-block">
+            <div class="code-header">javascript</div>
+            <pre class="code-inner"><span class="kw">if</span> (!email.includes(<span class="str">"@"</span>)) {
+  <span class="kw">return</span> <span class="str">"Email is invalid"</span>;
+}</pre>
+          </div>
+          <div class="section-body" style="margin-top: 12px;">
+            Check if data meets requirements. If not, reject it.
+          </div>
+        </div>
+      </div>
+
+      <div class="example-box">
+        <div class="example-label">Type 3: Loop (repeat with conditions)</div>
+        <div class="example-content">
+          <div class="code-block">
+            <div class="code-header">javascript</div>
+            <pre class="code-inner"><span class="kw">while</span> (attempts < <span class="num">3</span>) {
+  <span class="fn">askPassword</span>();
+  attempts++;
+}</pre>
+          </div>
+          <div class="section-body" style="margin-top: 12px;">
+            Keep repeating while a condition is true. Stop when it's false.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section">
+      <div class="key-point">
+        💡 KEY: Logic is the <strong>reasoning</strong> inside your code. It asks: "Should I do this? Check that? Keep repeating?" <em>That's logic.</em>
+      </div>
+    </div>
+
+    <div class="content-section">
+      <div class="section-title">Logic Can Be Broken</div>
+      <div class="example-box">
+        <div class="example-label">❌ Wrong Logic</div>
+        <div class="example-content">
+          <div class="code-block">
+            <div class="code-header">javascript</div>
+            <pre class="code-inner"><span class="kw">function</span> <span class="fn">validatePassword</span>( pwd ) {
+  <span class="kw">if</span> (pwd.length >= <span class="num">8</span>) {
+    <span class="kw">return</span> <span class="kw">true</span>;  <span class="comment">// Password is strong</span>
+  }
+  <span class="kw">return</span> <span class="kw">false</span>;   <span class="comment">// Too short</span>
+}</pre>
+          </div>
+          <div class="section-body" style="margin-top: 12px; color: var(--red);">
+            ❌ PROBLEM: Only checks length. A password "12345678" is 8 characters, but it's terrible (no letters, no symbols)!
+          </div>
+        </div>
+      </div>
+
+      <div class="example-box">
+        <div class="example-label">✓ Better Logic</div>
+        <div class="example-content">
+          <div class="code-block">
+            <div class="code-header">javascript</div>
+            <pre class="code-inner"><span class="kw">function</span> <span class="fn">validatePassword</span>( pwd ) {
+  <span class="kw">const</span> hasLength = pwd.length >= <span class="num">8</span>;
+  <span class="kw">const</span> hasNumbers = /[<span class="num">0</span>-<span class="num">9</span>]/.test(pwd);
+  <span class="kw">const</span> hasSymbols = /[@#$]/.test(pwd);
+
+  <span class="kw">if</span> (hasLength && hasNumbers && hasSymbols) {
+    <span class="kw">return</span> <span class="kw">true</span>;  <span class="comment">// Strong password!</span>
+  }
+  <span class="kw">return</span> <span class="kw">false</span>;   <span class="comment">// Not strong enough</span>
+}</pre>
+          </div>
+          <div class="section-body" style="margin-top: 12px; color: var(--green);">
+            ✓ BETTER: Checks 3 things. Only accepts passwords with length <strong>AND</strong> numbers <strong>AND</strong> symbols.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-nav">
+    <span class="nav-counter">4 / 15</span>
+    <div class="nav-buttons">
+      <button class="nav-btn" onclick="prevSlide()">← Back</button>
+      <button class="nav-btn primary" onclick="nextSlide()">Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== SLIDE 6: RETURN TYPE ===================== -->
+<div class="slide" id="slide-5">
+  <div class="slide-header">
+    <span class="slide-label">05 —</span>
+    <h1 class="slide-title"><em>Return</em> Type</h1>
+  </div>
+  <div class="slide-content">
+    <div class="content-section">
+      <div class="section-title">What Is a Return Type?</div>
+      <div class="analogy-box">
+        <div class="analogy-label">📦 Analogy: Delivery Package Label</div>
+        <div class="analogy-body">
+          When a package arrives at your door, it has a label:
+          <br><br>
+          "CONTENTS: Electronics"<br>
+          "WEIGHT: 2 kg"<br>
+          "FRAGILE: Yes"
+          <br><br>
+          The label is a <strong>promise</strong>. You expect electronics, not socks. You handle it gently.
+          <br><br>
+          A <strong>return type</strong> is the same. It's a promise: <em>"When you call me, I will give you back a ___."</em>
+          <br><br>
+          If you promise a NUMBER but return TEXT, the app breaks. The receiver expected one thing, got another.
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section">
+      <div class="section-title">Common Return Types</div>
+
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Return Type</th>
+            <th>What It Means</th>
+            <th>Example Code</th>
+            <th>What You Get Back</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code style="color: var(--neon);">number</code></td>
+            <td>A number</td>
+            <td><code>return 42;</code></td>
+            <td><code>42</code></td>
+          </tr>
+          <tr>
+            <td><code style="color: var(--neon);">string</code></td>
+            <td>Text</td>
+            <td><code>return "Hello";</code></td>
+            <td><code>"Hello"</code></td>
+          </tr>
+          <tr>
+            <td><code style="color: var(--neon);">boolean</code></td>
+            <td>true or false</td>
+            <td><code>return true;</code></td>
+            <td><code>true</code></td>
+          </tr>
+          <tr>
+            <td><code style="color: var(--neon);">array</code></td>
+            <td>A list</td>
+            <td><code>return [1,2,3];</code></td>
+            <td><code>[1, 2, 3]</code></td>
+          </tr>
+          <tr>
+            <td><code style="color: var(--neon);">object</code></td>
+            <td>A data structure</td>
+            <td><code>return {name: "Alex"};</code></td>
+            <td><code>{name: "Alex"}</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="content-section">
+      <div class="section-title">How to Declare Return Type</div>
+      <div class="section-body">
+        In <strong>TypeScript</strong> (the safer version of JavaScript), you declare what you promise to return:
+      </div>
+
+      <div class="example-box">
+        <div class="example-label">TypeScript Example</div>
+        <div class="example-content">
+          <div class="code-block">
+            <div class="code-header">typescript</div>
+            <pre class="code-inner"><span class="kw">function</span> <span class="fn">calculateAge</span>( birthYear: <span class="num">number</span> ) <span class="highlight">: number</span> {
+  <span class="comment">// ↑ I promise to return a NUMBER</span>
+  <span class="kw">return</span> <span class="num">2024</span> - birthYear;
+}</pre>
+          </div>
+          <div class="section-body" style="margin-top: 12px;">
+            The <code>: number</code> at the end is the <strong>return type declaration</strong>. It says: <em>"I promise this function will always return a number."</em>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section">
+      <div class="section-title">When Return Types Break</div>
+      <div class="example-box">
+        <div class="example-label">❌ Broken Promise</div>
+        <div class="example-content">
+          <div class="code-block">
+            <div class="code-header">typescript</div>
+            <pre class="code-inner"><span class="kw">function</span> <span class="fn">getTotal</span>( ) <span class="highlight">: number</span> {
+  <span class="kw">return</span> <span class="str">"Total: $100"</span>;  <span class="comment">// ❌ Returned TEXT, not NUMBER!</span>
+}
+
+<span class="comment">// Somewhere else in the code:</span>
+<span class="kw">let</span> price = <span class="fn">getTotal</span>();
+<span class="kw">let</span> newPrice = price + <span class="num">50</span>;  <span class="comment">// ❌ Can't add 50 to text! BREAKS!</span></pre>
+          </div>
+          <div class="section-body" style="margin-top: 12px; color: var(--red);">
+            The function promised a number but returned text. Other code expected a number and tried to do math with it. Crash!
+          </div>
+        </div>
+      </div>
+
+      <div class="key-point">
+        ⚠️ REMEMBER: <strong>Return type is a contract</strong>. If you promise <code>number</code>, always return a number. If you promise <code>boolean</code>, always return true or false. Breaking the promise breaks the app.
+      </div>
+    </div>
+  </div>
+  <div class="slide-nav">
+    <span class="nav-counter">5 / 15</span>
+    <div class="nav-buttons">
+      <button class="nav-btn" onclick="prevSlide()">← Back</button>
+      <button class="nav-btn primary" onclick="nextSlide()">Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== SLIDE 7-12: ACTION VERBS ===================== -->
+<div class="slide" id="slide-6">
+  <div class="slide-header">
+    <span class="slide-label">06 —</span>
+    <h1 class="slide-title"><em>Six</em> Action Verbs</h1>
+  </div>
+  <div class="slide-content">
+    <div class="content-section">
+      <div class="section-title">Overview: How to Modify Code</div>
+      <div class="section-body">
+        There are <strong>6 ways</strong> developers change code. Each one uses a specific verb:
+      </div>
+
+      <div class="side-by-side">
+        <div>
+          <strong style="color: var(--neon);">① ADD</strong> — Insert new things<br>
+          <strong style="color: var(--neon);">② REMOVE</strong> — Delete old things<br>
+          <strong style="color: var(--neon);">③ PASS</strong> — Send values to functions
+        </div>
+        <div>
+          <strong style="color: var(--neon);">④ MODIFY</strong> — Change what exists<br>
+          <strong style="color: var(--neon);">⑤ REFACTOR</strong> — Rewrite for quality<br>
+          <strong style="color: var(--neon);">⑥ VALIDATE</strong> — Check if data is correct
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section">
+      <div class="section-title">① ADD — Adding New Things</div>
+      <div class="example-box">
+        <div class="example-label">Scenario: Need a New Parameter</div>
+        <div class="example-content">
+          <div class="side-by-side">
+            <div>
+              <strong style="color: var(--yellow);">BEFORE</strong>
+              <div class="code-block" style="margin-top: 10px;">
+                <div class="code-header">javascript</div>
+                <pre class="code-inner"><span class="kw">function</span> <span class="fn">sendEmail</span>( to ) {
+  mailer.send(to);
+}</pre>
+              </div>
+            </div>
+            <div>
+              <strong style="color: var(--green);">AFTER (Added parameter)</strong>
+              <div class="code-block" style="margin-top: 10px;">
+                <div class="code-header">javascript</div>
+                <pre class="code-inner"><span class="kw">function</span> <span class="fn">sendEmail</span>( to, <span class="highlight">subject</span> ) {
+  mailer.send(to, subject);
+}</pre>
+              </div>
+            </div>
+          </div>
+          <div class="section-body" style="margin-top: 16px;">
+            We <strong>added</strong> a new parameter <code>subject</code> so the function can now send subject lines. The signature changed, but the purpose stayed the same: send email.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section">
+      <div class="section-title">② REMOVE — Deleting Things</div>
+      <div class="example-box">
+        <div class="example-label">Scenario: Unused Parameter</div>
+        <div class="example-content">
+          <div class="side-by-side">
+            <div>
+              <strong style="color: var(--yellow);">BEFORE</strong>
+              <div class="code-block" style="margin-top: 10px;">
+                <div class="code-header">javascript</div>
+                <pre class="code-inner"><span class="kw">function</span> <span class="fn">createUser</span>(
+  name, age, <span class="highlight">tempID</span>
+) { ... }</pre>
+              </div>
+              <div class="section-body" style="margin-top: 10px; font-size: 13px; color: var(--text3);">
+                <code>tempID</code> is never used inside the function. Why is it there?
+              </div>
+            </div>
+            <div>
+              <strong style="color: var(--green);">AFTER (Removed parameter)</strong>
+              <div class="code-block" style="margin-top: 10px;">
+                <div class="code-header">javascript</div>
+                <pre class="code-inner"><span class="kw">function</span> <span class="fn">createUser</span>(
+  name, age
+) { ... }</pre>
+              </div>
+              <div class="section-body" style="margin-top: 10px; font-size: 13px; color: var(--text3);">
+                Cleaner. Now developers know exactly what data the function needs.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section">
+      <div class="section-title">③ PASS — Sending Values</div>
+      <div class="example-box">
+        <div class="example-label">Scenario: Calling a Function with Arguments</div>
+        <div class="example-content">
+          <div class="code-block">
+            <div class="code-header">javascript</div>
+            <pre class="code-inner"><span class="comment">// The function expects values:</span>
+<span class="kw">function</span> <span class="fn">multiply</span>( a, b ) {
+  <span class="kw">return</span> a * b;
+}
+
+<span class="comment">// We PASS the values when calling:</span>
+<span class="fn">multiply</span>( <span class="highlight"><span class="num">5</span>, <span class="num">3</span></span> );
+<span class="comment">           ↑ We PASS 5 and 3 as arguments</span></pre>
+          </div>
+          <div class="section-body" style="margin-top: 12px;">
+            "PASS" means <strong>send arguments to a function</strong>. We pass the values that the parameters will receive.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section">
+      <div class="key-point">
+        💡 Next →: Let's cover MODIFY, REFACTOR, and VALIDATE in the next slide.
+      </div>
+    </div>
+  </div>
+  <div class="slide-nav">
+    <span class="nav-counter">6 / 15</span>
+    <div class="nav-buttons">
+      <button class="nav-btn" onclick="prevSlide()">← Back</button>
+      <button class="nav-btn primary" onclick="nextSlide()">Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== SLIDE 8: ACTION VERBS (PART 2) ===================== -->
+<div class="slide" id="slide-7">
+  <div class="slide-header">
+    <span class="slide-label">07 —</span>
+    <h1 class="slide-title"><em>Action</em> Verbs (Part 2)</h1>
+  </div>
+  <div class="slide-content">
+    <div class="content-section">
+      <div class="section-title">④ MODIFY — Changing What Exists</div>
+      <div class="example-box">
+        <div class="example-label">Scenario: Business Rule Changed</div>
+        <div class="example-content">
+          <div class="side-by-side">
+            <div>
+              <strong style="color: var(--yellow);">BEFORE</strong>
+              <div class="code-block" style="margin-top: 10px;">
+                <div class="code-header">javascript</div>
+                <pre class="code-inner"><span class="kw">function</span> <span class="fn">applyDiscount</span>( price ) {
+  <span class="kw">return</span> price * <span class="num">0.90</span>;
+  <span class="comment">// 10% off everything</span>
+}</pre>
+              </div>
+            </div>
+            <div>
+              <strong style="color: var(--green);">AFTER (Modified logic)</strong>
+              <div class="code-block" style="margin-top: 10px;">
+                <div class="code-header">javascript</div>
+                <pre class="code-inner"><span class="kw">function</span> <span class="fn">applyDiscount</span>( price ) {
+  <span class="kw">if</span> (price > <span class="num">100</span>) {
+    <span class="kw">return</span> price * <span class="num">0.80</span>; <span class="comment">// 20%</span>
+  } <span class="kw">else</span> {
+    <span class="kw">return</span> price * <span class="num">0.90</span>; <span class="comment">// 10%</span>
+  }
+}</pre>
+              </div>
+            </div>
+          </div>
+          <div class="section-body" style="margin-top: 16px;">
+            We <strong>modified</strong> the discount logic. The function name stayed the same, parameters stayed the same, but the logic inside changed. Big items now get 20% off instead of 10%.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section">
+      <div class="section-title">⑤ REFACTOR — Rewriting for Quality</div>
+      <div class="example-box">
+        <div class="example-label">Scenario: Cleaning Up the Code</div>
+        <div class="example-content">
+          <div class="side-by-side">
+            <div>
+              <strong style="color: var(--yellow);">BEFORE (Hard to read)</strong>
+              <div class="code-block" style="margin-top: 10px;">
+                <div class="code-header">javascript</div>
+                <pre class="code-inner"><span class="kw">function</span> <span class="fn">checkPass</span>(s) {
+  <span class="kw">if</span> (s >= <span class="num">50</span> && s <= <span class="num">100</span>) {
+    <span class="kw">return</span> <span class="kw">true</span>;
+  } <span class="kw">else</span> {
+    <span class="kw">return</span> <span class="kw">false</span>;
+  }
+}</pre>
+              </div>
+            </div>
+            <div>
+              <strong style="color: var(--green);">AFTER (Clean & readable)</strong>
+              <div class="code-block" style="margin-top: 10px;">
+                <div class="code-header">javascript</div>
+                <pre class="code-inner"><span class="kw">function</span> <span class="fn">checkPass</span>(score) {
+  <span class="kw">return</span> score >= <span class="num">50</span> && 
+         score <= <span class="num">100</span>;
+}</pre>
+              </div>
+            </div>
+          </div>
+          <div class="section-body" style="margin-top: 16px;">
+            We <strong>refactored</strong> the code. <em>Same result, better quality.</em> The function still checks if a score passes, but now it's much cleaner. Variable names are better, the logic is simpler.
+          </div>
+        </div>
+      </div>
+
+      <div class="key-point">
+        💡 REFACTOR = <strong>Same what, different how</strong>. The function still does the same thing, but the code looks better and is easier to understand.
+      </div>
+    </div>
+
+    <div class="content-section">
+      <div class="section-title">⑥ VALIDATE — Checking If Data Is Correct</div>
+      <div class="example-box">
+        <div class="example-label">Scenario: Making Sure Input Is Good</div>
+        <div class="example-content">
+          <div class="code-block">
+            <div class="code-header">javascript</div>
+            <pre class="code-inner"><span class="kw">function</span> <span class="fn">submitForm</span>( name, email, age ) {
+  <span class="comment">// VALIDATE: Is name empty?</span>
+  <span class="kw">if</span> (!name || name === <span class="str">""</span>) {
+    <span class="kw">return</span> <span class="str">"Name is required!"</span>;
+  }
+
+  <span class="comment">// VALIDATE: Does email have @?</span>
+  <span class="kw">if</span> (!email.includes(<span class="str">"@"</span>)) {
+    <span class="kw">return</span> <span class="str">"Email must have @"</span>;
+  }
+
+  <span class="comment">// VALIDATE: Is age positive?</span>
+  <span class="kw">if</span> (age < <span class="num">0</span>) {
+    <span class="kw">return</span> <span class="str">"Age can't be negative"</span>;
+  }
+
+  <span class="comment">// All checks passed! Save the data.</span>
+  database.save({ name, email, age });
+  <span class="kw">return</span> <span class="str">"Success!"</span>;
+}</pre>
+          </div>
+          <div class="section-body" style="margin-top: 12px;">
+            We <strong>validate</strong> each piece of input. We check multiple requirements. Only if <em>all checks pass</em> do we save the data.
+          </div>
+        </div>
+      </div>
+
+      <div class="key-point">
+        ⚠️ VALIDATE = <strong>Check multiple rules before accepting data.</strong> Bad input = rejected. Good input = accepted.
+      </div>
+    </div>
+  </div>
+  <div class="slide-nav">
+    <span class="nav-counter">7 / 15</span>
+    <div class="nav-buttons">
+      <button class="nav-btn" onclick="prevSlide()">← Back</button>
+      <button class="nav-btn primary" onclick="nextSlide()">Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== SLIDE 9: COMPLETE JOURNEY ===================== -->
+<div class="slide" id="slide-8">
+  <div class="slide-header">
+    <span class="slide-label">08 —</span>
+    <h1 class="slide-title"><em>Putting</em> It All Together</h1>
+  </div>
+  <div class="slide-content">
+    <div class="content-section">
+      <div class="section-title">Watch a Complete Function Work</div>
+      <div class="example-box">
+        <div class="example-label">Real-World Example: User Registration</div>
+        <div class="example-content">
+          <div class="code-block">
+            <div class="code-header">typescript</div>
+            <pre class="code-inner"><span class="highlight"><span class="kw">function</span> <span class="fn">registerUser</span>( email, password )</span>
+<span class="comment">                  └─ SIGNATURE (the contract)</span>
+
+  <span class="comment">// ═══════ BODY STARTS ═══════</span>
+
+  <span class="comment">// VALIDATE: Is email valid?</span>
+  <span class="kw">if</span> (!email.includes(<span class="str">"@"</span>)) {
+    <span class="kw">return</span> { success: <span class="kw">false</span> };
+  }
+
+  <span class="comment">// VALIDATE: Is password strong?</span>
+  <span class="kw">if</span> (password.length < <span class="num">8</span>) {
+    <span class="kw">return</span> { success: <span class="kw">false</span> };
+  }
+
+  <span class="comment">// LOGIC: Both checks passed, save user</span>
+  database.save({ email, password });
+
+  <span class="comment">// RETURN: Promise to send back an object with success:true</span>
+  <span class="kw">return</span> { success: <span class="kw">true</span> };
+  <span class="comment">         └─ RETURN TYPE: object</span>
+
+  <span class="comment">// ═══════ BODY ENDS ═══════</span>
+}</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section">
+      <div class="section-title">Trace the Execution</div>
+      <div class="section-body">
+        Let's watch what happens when we call this function:
+      </div>
+
+      <div class="example-box">
+        <div class="example-label">Step 1: Make the Call</div>
+        <div class="example-content" style="font-family: var(--font-mono);">
+          <code>registerUser("daniel@school.com", "SecurePass123")</code>
+          <br><br>
+          <strong style="color: var(--neon);">→ Function starts running</strong>
+        </div>
+      </div>
+
+      <div class="example-box">
+        <div class="example-label">Step 2: Parameters Receive Arguments</div>
+        <div class="example-content" style="font-family: var(--font-mono);">
+          email = "daniel@school.com"<br>
+          password = "SecurePass123"<br>
+          <br>
+          <strong style="color: var(--neon);">→ Now the function knows what to work with</strong>
+        </div>
+      </div>
+
+      <div class="example-box">
+        <div class="example-label">Step 3: Execute Logic #1 (Email Check)</div>
+        <div class="example-content" style="font-family: var(--font-mono);">
+          <code>Does "daniel@school.com" include "@"?</code><br>
+          <br>
+          ✓ YES<br>
+          <br>
+          <strong style="color: var(--green);">→ Validation PASSES, continue to next check</strong>
+        </div>
+      </div>
+
+      <div class="example-box">
+        <div class="example-label">Step 4: Execute Logic #2 (Password Check)</div>
+        <div class="example-content" style="font-family: var(--font-mono);">
+          <code>Is "SecurePass123" at least 8 characters?</code><br>
+          <br>
+          ✓ YES (14 characters)<br>
+          <br>
+          <strong style="color: var(--green);">→ Validation PASSES, both checks succeeded</strong>
+        </div>
+      </div>
+
+      <div class="example-box">
+        <div class="example-label">Step 5: Save Data</div>
+        <div class="example-content" style="font-family: var(--font-mono);">
+          <code>database.save({ email: "daniel@school.com", password: "SecurePass123" })</code><br>
+          <br>
+          <strong style="color: var(--green);">→ User is now saved in the database</strong>
+        </div>
+      </div>
+
+      <div class="example-box">
+        <div class="example-label">Step 6: Return Result</div>
+        <div class="example-content" style="font-family: var(--font-mono);">
+          <code>return { success: true }</code><br>
+          <br>
+          <strong style="color: var(--neon);">→ Function is DONE. Result goes back to caller.</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section">
+      <div class="key-point">
+        💡 REMEMBER: Every function follows this journey: <strong>1) Receive parameters 2) Execute logic 3) Return result.</strong> Master these 6 concepts, and you master functions.
+      </div>
+    </div>
+  </div>
+  <div class="slide-nav">
+    <span class="nav-counter">8 / 15</span>
+    <div class="nav-buttons">
+      <button class="nav-btn" onclick="prevSlide()">← Back</button>
+      <button class="nav-btn primary" onclick="nextSlide()">Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== REMAINING SLIDES (PLACEHOLDER) ===================== -->
+<div class="slide" id="slide-9">
+  <div class="slide-header">
+    <span class="slide-label">09 —</span>
+    <h1 class="slide-title"><em>Ready</em> to Practice?</h1>
+  </div>
+  <div class="slide-content">
+    <div class="content-section">
+      <div class="section-title">You've Learned the Concepts</div>
+      <div class="section-body">
+        You now understand:
+        <ul style="margin-top: 16px; margin-left: 20px; line-height: 2;">
+          <li><strong style="color: var(--neon);">Parameters vs Arguments</strong> — Placeholders vs real values</li>
+          <li><strong style="color: var(--neon);">Function Signature</strong> — The contract</li>
+          <li><strong style="color: var(--neon);">Function Body</strong> — The actual work</li>
+          <li><strong style="color: var(--neon);">Logic</strong> — Decision-making</li>
+          <li><strong style="color: var(--neon);">Return Type</strong> — The promise</li>
+          <li><strong style="color: var(--neon);">Action Verbs</strong> — Add, Remove, Pass, Modify, Refactor, Validate</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="content-section">
+      <div class="section-title">Next: Interactive Exercises</div>
+      <div class="section-body">
+        The next phase of this lesson is <strong>interactive</strong>. You'll:
+        <ul style="margin-top: 16px; margin-left: 20px; line-height: 2;">
+          <li>🎯 <strong>IDENTIFY</strong> concepts by answering multiple-choice questions</li>
+          <li>🔍 <strong>DEFINE</strong> elements by highlighting code</li>
+          <li>🎬 <strong>NAME</strong> code changes by classifying them</li>
+          <li>📚 <strong>REVIEW</strong> vocabulary through flashcards and gap-fill exercises</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="content-section">
+      <div class="section-title">Tips for Success</div>
+      <div class="example-box">
+        <div class="example-label">✓ Read the code slowly</div>
+        <div class="example-content">
+          Don't rush through code snippets. Read each line carefully.
+        </div>
+      </div>
+      <div class="example-box">
+        <div class="example-label">✓ Think about what's happening</div>
+        <div class="example-content">
+          Ask yourself: "Is this a parameter or argument? Where's the body? What logic is happening?"
+        </div>
+      </div>
+      <div class="example-box">
+        <div class="example-label">✓ Learn from mistakes</div>
+        <div class="example-content">
+          When you get one wrong, read the feedback. That's how you learn!
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section" style="text-align: center; padding: 40px 48px;">
+      <div style="font-size: 32px; margin-bottom: 12px;">⚡</div>
+      <div style="font-family: var(--font-display); font-size: 24px; font-weight: 700; color: var(--neon); margin-bottom: 8px;">
+        Ready?
+      </div>
+      <div style="color: var(--text2);">
+        Click "Next" to start the interactive exercises.
+      </div>
+    </div>
+  </div>
+  <div class="slide-nav">
+    <span class="nav-counter">9 / 15</span>
+    <div class="nav-buttons">
+      <button class="nav-btn" onclick="prevSlide()">← Back</button>
+      <button class="nav-btn primary" onclick="goToInteractive()">Go to Exercises →</button>
+    </div>
+  </div>
+</div>
+
+<!-- PLACEHOLDER SLIDES (10-14) -->
+<div class="slide" id="slide-10">
+  <div class="slide-header">
+    <span class="slide-label">10 —</span>
+    <h1 class="slide-title"><em>Interactive</em> Exercises</h1>
+  </div>
+  <div class="slide-content">
+    <div class="content-section">
+      <div class="section-title">Coming Next</div>
+      <div class="section-body">
+        The interactive exercise module will load when you click "Go to Exercises."
+      </div>
+    </div>
+  </div>
+  <div class="slide-nav">
+    <span class="nav-counter">10 / 15</span>
+    <div class="nav-buttons">
+      <button class="nav-btn" onclick="prevSlide()">← Back</button>
+      <button class="nav-btn primary" onclick="nextSlide()" disabled>Next</button>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-11">
+  <div class="slide-header">
+    <span class="slide-label">11 —</span>
+    <h1 class="slide-title">Placeholder</h1>
+  </div>
+  <div class="slide-nav">
+    <span class="nav-counter">11 / 15</span>
+  </div>
+</div>
+
+<div class="slide" id="slide-12">
+  <div class="slide-header">
+    <span class="slide-label">12 —</span>
+    <h1 class="slide-title">Placeholder</h1>
+  </div>
+  <div class="slide-nav">
+    <span class="nav-counter">12 / 15</span>
+  </div>
+</div>
+
+<div class="slide" id="slide-13">
+  <div class="slide-header">
+    <span class="slide-label">13 —</span>
+    <h1 class="slide-title">Placeholder</h1>
+  </div>
+  <div class="slide-nav">
+    <span class="nav-counter">13 / 15</span>
+  </div>
+</div>
+
+<div class="slide" id="slide-14">
+  <div class="slide-header">
+    <span class="slide-label">14 —</span>
+    <h1 class="slide-title">Placeholder</h1>
+  </div>
+  <div class="slide-nav">
+    <span class="nav-counter">14 / 15</span>
+  </div>
+</div>
+
+<script>
+const totalSlides = 15;
+let currentSlide = 0;
+
+function initNav() {
+  const nav = document.getElementById('slide-nav');
+  for (let i = 0; i < totalSlides; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goToSlide(i);
+    nav.appendChild(dot);
+  }
+}
+
+function goToSlide(n) {
+  if (n < 0 || n >= totalSlides) return;
+  document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('#slide-nav .dot').forEach((d, i) => d.classList.toggle('active', i === n));
+  document.getElementById('slide-' + n).classList.add('active');
+  document.getElementById('progress-bar').style.width = ((n + 1) / totalSlides * 100) + '%';
+  currentSlide = n;
+}
+
+function nextSlide() {
+  goToSlide(currentSlide + 1);
+}
+
+function prevSlide() {
+  goToSlide(currentSlide - 1);
+}
+
+function goToInteractive() {
+  // This would link to the interactive exercise module
+  alert('Exercises module would open here (lessons-interactive.html)');
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight') nextSlide();
+  if (e.key === 'ArrowLeft') prevSlide();
+});
+
+initNav();
+</script>
+
+</body>
+</html>
